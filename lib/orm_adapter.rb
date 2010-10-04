@@ -1,5 +1,7 @@
-require 'orm_adapter/register'
 require 'orm_adapter/contract'
+require 'orm_adapter/instance'
+require 'orm_adapter/to_adapter'
+require 'orm_adapter/register'
 
 module OrmAdapter
 end

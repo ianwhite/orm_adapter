@@ -5,6 +5,8 @@ rescue LoadError
 end
 
 class ActiveRecord::Base
+  extend OrmAdapter::ToAdapter
+  
   module OrmAdapter
     include ::OrmAdapter::Register
 
