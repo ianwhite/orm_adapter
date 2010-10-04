@@ -97,6 +97,13 @@ else
           Note.last.owner.should == user
         end
       end
+      
+      describe "<model class>#to_adapter" do
+        it "should return an adapter instance for the receiver" do
+          User.to_adapter.should be_a(OrmAdapter::Instance)
+          User.to_adapter.klass.should == User
+        end
+      end
     end
   end
 end

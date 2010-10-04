@@ -4,6 +4,9 @@ require 'orm_adapter/to_adapter'
 require 'orm_adapter/register'
 
 module OrmAdapter
+  def self.for(klass)
+    Instance.new(klass)
+  end
 end
 
 require 'orm_adapter/adapters/active_record' if defined?(ActiveRecord::Base)

@@ -2,6 +2,10 @@ require 'mongoid'
 
 module Mongoid
   module Document
+    module ClassMethods
+      include OrmAdapter::ToAdapter
+    end
+    
     module OrmAdapter
       include ::OrmAdapter::Register
 
