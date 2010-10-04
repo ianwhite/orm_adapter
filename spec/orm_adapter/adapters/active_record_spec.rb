@@ -3,10 +3,7 @@ require 'spec_helper'
 if !defined?(ActiveRecord::Base)
   puts "** require 'active_record' to run the specs in #{__FILE__}"
 else  
-    
-  database = File.join(File.dirname(__FILE__), '../../../tmp/active_record.sqlite')
-  `mkdir -p #{File.dirname(database)}`
-  ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => database)
+  ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ":memory:")
 
   ActiveRecord::Migration.suppress_messages do
     ActiveRecord::Schema.define(:version => 0) do
