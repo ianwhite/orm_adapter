@@ -1,7 +1,14 @@
 = orm_adapter
 
-Description goes here.
+Extraction from pickle's orm adapter
 
+== Example
+
+  require 'orm_adapter'
+
+  OrmAdapter.for(User).find_first(:name => "fred")
+  User.to_adapter.find_first(:name => "fred")
+  
 == Note on Patches/Pull Requests
  
 * Fork the project.
