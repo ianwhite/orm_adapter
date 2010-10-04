@@ -1,11 +1,15 @@
-require 'orm_adapter/contract'
-require 'orm_adapter/instance'
+require 'orm_adapter/base'
 require 'orm_adapter/to_adapter'
-require 'orm_adapter/register'
 
 module OrmAdapter
-  def self.for(klass)
-    Instance.new(klass)
+  # A collection of registered adapters
+  def self.adapters
+    @@adapters ||= []
+  end
+
+  # All model classes from all registered adapters
+  def self.model_classes
+    self.adapters.map { |a| a.model_classes }.flatten
   end
 end
 

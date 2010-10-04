@@ -7,8 +7,7 @@ end
 class ActiveRecord::Base
   extend OrmAdapter::ToAdapter
   
-  module OrmAdapter
-    include ::OrmAdapter::Register
+  class OrmAdapter < ::OrmAdapter::Base
 
     # Do not consider these to be part of the class list
     def self.except_classes
@@ -32,28 +31,29 @@ class ActiveRecord::Base
     end
 
     # Get an instance by id of the model
-    def self.get_model(klass, id)
+    def get_model(id)
       klass.find(id)
     end
 
     # Find the first instance matching conditions
-    def self.find_first_model(klass, conditions)
-      klass.first :conditions => conditions_to_fields(klass, conditions)
+    def find_first_model(conditions)
+      klass.first :conditions => conditions_to_fields(conditions)
     end
 
     # Find all models matching conditions
-    def self.find_all_models(klass, conditions)
-      klass.all :conditions => conditions_to_fields(klass, conditions)
+    def find_all_models(conditions)
+      klass.all :conditions => conditions_to_fields(conditions)
     end
     
     # Create a model using attributes
-    def self.create_model(klass, attributes)
+    def create_model(attributes)
       klass.create!(attributes)
     end
     
   protected
-    # introspects the klass to convert and objects in conditions into foreign key and type fields
-    def self.conditions_to_fields(klass, conditions)
+
+    # Introspects the klass to convert and objects in conditions into foreign key and type fields
+    def conditions_to_fields(conditions)
       conditions.inject({}) do |fields, (key, value)|
         if value.is_a?(ActiveRecord::Base) && klass.column_names.include?("#{key}_id")
           if klass.column_names.include?("#{key}_type")

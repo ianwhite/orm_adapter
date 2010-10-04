@@ -6,9 +6,7 @@ module Mongoid
       include OrmAdapter::ToAdapter
     end
     
-    module OrmAdapter
-      include ::OrmAdapter::Register
-
+    class OrmAdapter < ::OrmAdapter::Base
       # Do not consider these to be part of the class list
       def self.except_classes
         @@except_classes ||= []
@@ -20,33 +18,34 @@ module Mongoid
       end
 
       # get a list of column names for a given class
-      def self.column_names(klass)
+      def column_names
         klass.fields.keys
       end
 
       # Get an instance by id of the model
-      def self.get_model(klass, id)
+      def get_model(id)
         klass.find(id)
       end
 
       # Find the first instance matching conditions
-      def self.find_first_model(klass, conditions)
-        klass.first(:conditions => conditions_to_fields(klass, conditions))
+      def find_first_model(conditions)
+        klass.first(:conditions => conditions_to_fields(conditions))
       end
 
       # Find all models matching conditions
-      def self.find_all_models(klass, conditions)
-        klass.all(:conditions => conditions_to_fields(klass, conditions))
+      def find_all_models(conditions)
+        klass.all(:conditions => conditions_to_fields(conditions))
       end
 
       # Create a model with given attributes
-      def self.create_model(klass, attributes)
+      def create_model(attributes)
         klass.create!(attributes)
       end
   
-  protected
+    protected
+
       # converts and documents to ids
-      def self.conditions_to_fields(klass, conditions)
+      def conditions_to_fields(conditions)
         conditions.inject({}) do |fields, (key, value)|
           if value.is_a?(Mongoid::Document) && klass.fields.keys.include?("#{key}_id")
             fields.merge("#{key}_id" => value.id)

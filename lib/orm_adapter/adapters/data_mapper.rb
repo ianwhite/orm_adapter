@@ -6,8 +6,7 @@ module DataMapper
   end
   
   module Resource
-    module OrmAdapter
-      include ::OrmAdapter::Register
+    class OrmAdapter < ::OrmAdapter::Base
 
       # Do not consider these to be part of the class list
       def self.except_classes
@@ -20,27 +19,27 @@ module DataMapper
       end
 
       # get a list of column names for a given class
-      def self.column_names(klass)
+      def column_names
         klass.properties.map(&:name)
       end
 
       # Get an instance by id of the model
-      def self.get_model(klass, id)
+      def get_model(id)
         klass.get!(id)
       end
 
       # Find the first instance matching conditions
-      def self.find_first_model(klass, conditions)
+      def find_first_model(conditions)
         klass.first(conditions)
       end
 
       # Find all models matching conditions
-      def self.find_all_models(klass, conditions)
+      def find_all_models(conditions)
         klass.all(conditions)
       end
     
       # Create a model using attributes
-      def self.create_model(klass, attributes)
+      def create_model(attributes)
         klass.create(attributes)
       end
     end
