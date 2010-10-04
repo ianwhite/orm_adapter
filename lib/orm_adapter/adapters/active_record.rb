@@ -6,7 +6,7 @@ end
 
 class ActiveRecord::Base
   module OrmAdapter
-    include OrmAdapter::Register
+    include ::OrmAdapter::Register
 
     # Do not consider these to be part of the class list
     def self.except_classes
