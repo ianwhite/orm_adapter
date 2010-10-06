@@ -1,6 +1,6 @@
 = orm_adapter
 
-Provides a single point of entry for popular ruby ORMs.  It's target audience is gem authors who want to support more than one ORM.
+Provides a single point of entry for popular ruby ORMs.  Its target audience is gem authors who want to support more than one ORM.
 
 Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
 
@@ -22,7 +22,8 @@ Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
 
 == History
 
-orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox] and {Josh Bassett}[http://github.com/nullobject].  {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release.
+
+orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox] and {Josh Bassett}[http://github.com/nullobject].  {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
 
 
 == Copyright
