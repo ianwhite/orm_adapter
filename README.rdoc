@@ -23,7 +23,9 @@ Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
 == History
 
 
-orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox] and {Josh Bassett}[http://github.com/nullobject].  {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
+orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox], {Josh Bassett}[http://github.com/nullobject], {Marc Lee}[http://github.com/maleko], and {Sebastian Zuchmanski}[http://github.com/sebcioz].
+
+{José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
 
 
 == Copyright
