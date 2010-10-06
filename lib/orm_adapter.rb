@@ -1,5 +1,6 @@
 require 'orm_adapter/base'
 require 'orm_adapter/to_adapter'
+require 'orm_adapter/version'
 
 module OrmAdapter
   # A collection of registered adapters
