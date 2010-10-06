@@ -30,23 +30,28 @@ class ActiveRecord::Base
       end
     end
 
+    # Return list of column/property names
+    def column_names
+      klass.column_names
+    end
+
     # Get an instance by id of the model
-    def get_model(id)
+    def get!(id)
       klass.find(id)
     end
 
     # Find the first instance matching conditions
-    def find_first_model(conditions)
+    def find_first(conditions)
       klass.first :conditions => conditions_to_fields(conditions)
     end
 
     # Find all models matching conditions
-    def find_all_models(conditions)
+    def find_all(conditions)
       klass.all :conditions => conditions_to_fields(conditions)
     end
     
     # Create a model using attributes
-    def create_model(attributes)
+    def create!(attributes)
       klass.create!(attributes)
     end
     

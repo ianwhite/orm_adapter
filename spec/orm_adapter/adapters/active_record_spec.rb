@@ -50,90 +50,90 @@ else
         subject.model_classes.should == [User, Site, Note]
       end
     
-      describe "get_model(id)" do
+      describe "get!(id)" do
         specify "should return the instance of klass with id if it exists" do
           user = User.create!
-          User.to_adapter.get_model(user.id).should == user
+          User.to_adapter.get!(user.id).should == user
         end
       
         specify "should raise an error if the klass does not have an instance with that id" do
-          lambda { User.to_adapter.get_model(1) }.should raise_error
+          lambda { User.to_adapter.get!(1) }.should raise_error
         end
       end
     
-      describe "find_first_model(klass, conditions)" do
+      describe "find_first(klass, conditions)" do
         specify "should return first model matching conditions, if it exists" do
           user = User.create! :name => "Fred"
-          User.to_adapter.find_first_model(:name => "Fred").should == user
+          User.to_adapter.find_first(:name => "Fred").should == user
         end
 
         specify "should return nil if no conditions match" do
-          User.to_adapter.find_first_model(:name => "Betty").should == nil
+          User.to_adapter.find_first(:name => "Betty").should == nil
         end
       
         specify "should handle belongs_to objects in attributes hash" do
           site = Site.create!
           user = User.create! :name => "Fred", :site => site
-          User.to_adapter.find_first_model(:site => site).should == user
+          User.to_adapter.find_first(:site => site).should == user
         end
 
         specify "should handle belongs_to :polymorphic objects in attributes hash" do
           site = Site.create!
           note = Note.create! :owner => site
-          Note.to_adapter.find_first_model(:owner => site).should == note
+          Note.to_adapter.find_first(:owner => site).should == note
         end
       end
     
-      describe "find_all_models(klass, conditions)" do
+      describe "find_all(klass, conditions)" do
         specify "should return all models matching conditions" do
           user1 = User.create! :name => "Fred"
           user2 = User.create! :name => "Fred"
           user3 = User.create! :name => "Betty"
-          User.to_adapter.find_all_models(:name => "Fred").should == [user1, user2]
+          User.to_adapter.find_all(:name => "Fred").should == [user1, user2]
         end
 
         specify "should return empty array if no conditions match" do
-          User.to_adapter.find_all_models(:name => "Betty").should == []
+          User.to_adapter.find_all(:name => "Betty").should == []
         end
       
         specify "should handle belongs_to objects in conditions hash" do
           site1, site2 = Site.create!, Site.create!
           user1, user2 = User.create!(:site => site1), User.create!(:site => site2)
-          User.to_adapter.find_all_models(:site => site1).should == [user1]
+          User.to_adapter.find_all(:site => site1).should == [user1]
         end
       
         specify "should handle polymorphic belongs_to objects in conditions hash" do
           site1, site2 = Site.create!, Site.create!
           note1, note2 = site1.notes.create!, site2.notes.create!
-          Note.to_adapter.find_all_models(:owner => site1).should == [note1]
+          Note.to_adapter.find_all(:owner => site1).should == [note1]
         end
       end
 
-      describe "create_model(klass, attributes)" do
+      describe "create!(klass, attributes)" do
         it "should create a model using the given attributes" do
-          User.to_adapter.create_model(:name => "Fred")
+          User.to_adapter.create!(:name => "Fred")
           User.last.name.should == "Fred"
         end
       
         it "should raise error if the create fails" do
-          lambda { User.to_adapter.create_model(:non_existent => true) }.should raise_error
+          lambda { User.to_adapter.create!(:non_existent => true) }.should raise_error
         end
       
         it "should handle belongs_to objects in attributes hash" do
           site = Site.create!
-          User.to_adapter.create_model(:site => site)
+          User.to_adapter.create!(:site => site)
           User.last.site.should == site
         end
       
         it "should handle polymorphic belongs_to objects in attributes hash" do
           site = Site.create!
-          Note.to_adapter.create_model(:owner => site)
+          Note.to_adapter.create!(:owner => site)
           Note.last.owner.should == site
         end
       
         it "should handle has_many objects in attributes hash" do
           users = [User.create!, User.create!]
-          Site.to_adapter.create_model(:users => users)
+          Site.to_adapter.create!(:users => users)
           Site.last.users.should == users
         end
       end

@@ -23,23 +23,28 @@ module OrmAdapter
       @klass = klass
     end
 
+    # Get a list of column/property/field names
+    def column_names
+      raise NotSupportedError
+    end
+    
     # Get an instance by id of the model
-    def get_model(id)
+    def get!(id)
       raise NotSupportedError
     end
 
     # Find the first instance matching conditions
-    def find_first_model(conditions)
+    def find_first(conditions)
       raise NotSupportedError
     end
 
     # Find all models matching conditions
-    def find_all_models(conditions)
+    def find_all(conditions)
       raise NotSupportedError
     end
 
     # Create a model using attributes
-    def create_model(attributes)
+    def create!(attributes)
       raise NotSupportedError
     end
   end
