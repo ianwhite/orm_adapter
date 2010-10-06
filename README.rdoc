@@ -1,24 +1,30 @@
 = orm_adapter
 
-Extraction from pickle's orm adapter
+Provides a single point of entry for popular ruby ORMs.  It's target audience is gem authors who want to support more than one ORM.
 
-== Example
+Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
+
+
+== Example of use
 
   require 'orm_adapter'
 
-  OrmAdapter.for(User).find_first(:name => "fred")
-  User.to_adapter.find_first(:name => "fred")
+  User # is it an ActiveRecord, DM Resource, or MongoId Document?
   
-== Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+  User.to_adapter.find_first :name => 'Fred' # we don't care!
+  
+  user_model = User.to_adapter
+  user_model.get!(1)                      # find a record by id
+  user_model.find_first(:name => 'fred')  # find first fred
+  user_model.find_all(:name => 'fred')    # find all freds
+  user_model.create!(:name => 'fred')     # create a fred 
+  
+
+== History
+
+orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox] and {Josh Bassett}[http://github.com/nullobject].  {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release.
+
 
 == Copyright
 
-Copyright (c) 2010 Ian White. See LICENSE for details.
+Copyright (c) 2010 Ian White and José Valim. See LICENSE for details.

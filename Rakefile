@@ -24,10 +24,16 @@ begin
     gem.authors = ["Ian White", "Jose Valim"]
   end
   Jeweler::GemcutterTasks.new
+  
+  namespace :release do
+    desc "release to github and gemcutter"
+    task :all => ['release', 'gemcutter:release']
+  end
+  
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
 YARD::Rake::YardocTask.new(:doc) do |t|
-  t.files   = ['lib/**/*.rb', 'README.rdoc', 'LICENSE']
+  t.files   = ['lib/**/*.rb', 'README.rdoc']
 end
