@@ -18,7 +18,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.create!(:name => 'fred')     # create a fred 
   
 
-== Supported adapters
+== Supported ORMs
 
 Currently supported ORMs are *ActiveRecord*, *DataMapper* and *MongoId*.  More adapters are welcome!
 
