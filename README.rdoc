@@ -2,8 +2,6 @@
 
 Provides a single point of entry for popular ruby ORMs.  Its target audience is gem authors who want to support more than one ORM.
 
-Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
-
 
 == Example of use
 
@@ -20,8 +18,14 @@ Currently supported ORMs are ActiveRecord, DataMapper and MongoId.
   user_model.create!(:name => 'fred')     # create a fred 
   
 
-== History
+== Supported adapters
 
+Currently supported ORMs are *ActiveRecord*, *DataMapper* and *MongoId*.  More adapters are welcome!
+
+To write an adapter look at +lib/orm_adapter/adapters/active_record.rb+ for an example of implementation.  To see how to test it, look at +spec/orm_adapter/example_app_shared.rb+, +spec/orm_adapter/adapters/active_record_spec.rb+.  You'll need to require the target ORM in +spec/spec_helper.rb+
+
+
+== History
 
 orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox], {Josh Bassett}[http://github.com/nullobject], {Marc Lee}[http://github.com/maleko], and {Sebastian Zuchmanski}[http://github.com/sebcioz].
 
