@@ -13,8 +13,8 @@
 #       klass.create!(attrs)
 #     end
 #
-#     def get_model_by_id(klass, id)
-#       klass.find(id)
+#     def reload_model(model)
+#       model.class.find(model.id)
 #     end
 #   end
 #
