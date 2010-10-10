@@ -64,15 +64,12 @@ class ActiveRecord::Base
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields
     def conditions_to_fields(conditions)
-      conditions.inject({}) do |fields, (key, value)|
+      conditions = conditions.dup
+      conditions.each do |key, value|
         if value.is_a?(ActiveRecord::Base) && klass.column_names.include?("#{key}_id")
-          if klass.column_names.include?("#{key}_type")
-            fields.merge("#{key}_id" => value.id, "#{key}_type" => value.class.base_class.name)
-          else
-            fields.merge("#{key}_id" => value.id)
-          end
-        else
-          fields.merge(key => value)
+          conditions.delete(key)
+          conditions["#{key}_id"]   = value.id          
+          conditions["#{key}_type"] = value.class.base_class.name if klass.column_names.include?("#{key}_type")
         end
       end
     end
