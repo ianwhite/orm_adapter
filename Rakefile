@@ -16,7 +16,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "orm_adapter"
-    gem.version = OrmAdapter::Version::String
+    gem.version = OrmAdapter::VERSION
     gem.summary = %Q{Provides a single point of entry for using basic features of ruby ORMs}
     gem.description = %Q{Provides a single point of entry for using basic features of ruby ORMs}
     gem.email = "ian.w.white@gmail.com"
