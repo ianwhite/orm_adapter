@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ian White", "Jose Valim"]
-  s.date = %q{2010-10-06}
+  s.date = %q{2010-10-10}
   s.description = %q{Provides a single point of entry for using basic features of ruby ORMs}
   s.email = %q{ian.w.white@gmail.com}
   s.extra_rdoc_files = [
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.rdoc",
      "Rakefile",
-     "VERSION.yml",
      "lib/orm_adapter.rb",
      "lib/orm_adapter/adapters/active_record.rb",
      "lib/orm_adapter/adapters/data_mapper.rb",
@@ -36,6 +35,7 @@ Gem::Specification.new do |s|
      "spec/orm_adapter/adapters/active_record_spec.rb",
      "spec/orm_adapter/adapters/data_mapper_spec.rb",
      "spec/orm_adapter/adapters/mongoid_spec.rb",
+     "spec/orm_adapter/example_app_shared.rb",
      "spec/orm_adapter_spec.rb",
      "spec/spec_helper.rb"
   ]
@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
     "spec/orm_adapter/adapters/active_record_spec.rb",
      "spec/orm_adapter/adapters/data_mapper_spec.rb",
      "spec/orm_adapter/adapters/mongoid_spec.rb",
+     "spec/orm_adapter/example_app_shared.rb",
      "spec/orm_adapter_spec.rb",
      "spec/spec_helper.rb"
   ]
