@@ -24,14 +24,14 @@ Currently supported ORMs are *ActiveRecord*, *DataMapper* and *MongoId*.
 
 We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these three major ORMs working.
 
-To write an adapter look at +lib/orm_adapter/adapters/active_record.rb+ for an example of implementation.  To see how to test it, look at +spec/orm_adapter/example_app_shared.rb+, +spec/orm_adapter/adapters/active_record_spec.rb+.  You'll need to require the target ORM in +spec/spec_helper.rb+
+To write an adapter look at <tt>lib/orm_adapter/adapters/active_record.rb</tt> for an example of implementation.  To see how to test it, look at <tt>spec/orm_adapter/example_app_shared.rb</tt>, <tt>spec/orm_adapter/adapters/active_record_spec.rb</tt>.  You'll need to require the target ORM in <tt>spec/spec_helper.rb</tt>
 
 
 == Goals
 
 ORM Adapter goal is to support a minimum API used by most of the plugins that needs agnosticism beyond Active Model.
 
-ORM Adapter will support only basic methods, as +get+, +find_first+, +create!+ and so forth. It is not ORM Adapter goal to support different query constructions, handle table joins, etc.
+ORM Adapter will support only basic methods, as +get+, +find_first+, <tt>create!</tt> and so forth. It is not ORM Adapter's goal to support different query constructions, handle table joins, etc.
 
 If you need complex queries, we recommend you to subclass ORM Adapters in your plugin and extend it expressing these query conditions as part of your domain logic.
 
