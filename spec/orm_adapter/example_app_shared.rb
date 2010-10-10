@@ -54,8 +54,29 @@ shared_examples_for "example app with orm_adapter" do
         user_adapter.get!(user.id).should == user
       end
 
+      it "should allow to_key like arguments" do
+        user = create_model(user_class)
+        user_adapter.get!(user.to_key).should == user
+      end
+
       it "should raise an error if there is no instance with that id" do
         lambda { user_adapter.get!("non-exitent id") }.should raise_error
+      end
+    end
+
+    describe "#get(id)" do
+      it "should return the instance with id if it exists" do
+        user = create_model(user_class)
+        user_adapter.get(user.id).should == user
+      end
+
+      it "should allow to_key like arguments" do
+        user = create_model(user_class)
+        user_adapter.get(user.to_key).should == user
+      end
+
+      it "should return nil if there is no instance with that id" do
+        user_adapter.get("non-exitent id").should be_nil
       end
     end
   

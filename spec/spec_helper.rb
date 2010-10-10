@@ -11,4 +11,5 @@ $:.unshift(File.dirname(__FILE__) + '/../lib')
   end
 end
 
+require 'dm-active_model' if defined?(DataMapper)
 require 'orm_adapter'

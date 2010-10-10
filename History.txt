@@ -1,6 +1,7 @@
 == master
 
-  * Extract tests into shared example.  Give instructions on how to write a new adapter. [Ian White]
+  * Add #get to the API. Ensure both #get and #get! complies with to_key requirements. [José Valim]
+  * Extract tests into shared example. Give instructions on how to write a new adapter. [Ian White]
 
 
 == 0.0.1

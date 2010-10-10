@@ -28,8 +28,21 @@ module OrmAdapter
       raise NotSupportedError
     end
     
-    # Get an instance by id of the model
+    # Get an instance by id of the model. Raises an error if a model is not found.
+    # This should comply with ActiveModel#to_key API, i.e.:
+    #
+    #   User.to_adapter.get!(@user.to_key) == @user
+    #
     def get!(id)
+      raise NotSupportedError
+    end
+
+    # Get an instance by id of the model. Returns nil if a model is not found.
+    # This should comply with ActiveModel#to_key API, i.e.:
+    #
+    #   User.to_adapter.get(@user.to_key) == @user
+    #
+    def get
       raise NotSupportedError
     end
 
@@ -47,9 +60,15 @@ module OrmAdapter
     def create!(attributes)
       raise NotSupportedError
     end
+
+    protected
+
+    def wrap_key(key)
+      key.is_a?(Array) ? key.first : key
+    end
   end
 
-  class NotSupportedError < RuntimeError
+  class NotSupportedError < NotImplementedError
     def to_s
       "method not supported by this orm adapter"
     end

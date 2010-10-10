@@ -28,6 +28,11 @@ module DataMapper
         klass.get!(id)
       end
 
+      # Get an instance by id of the model
+      def get(id)
+        klass.get(id)
+      end
+
       # Find the first instance matching conditions
       def find_first(conditions)
         klass.first(conditions)
