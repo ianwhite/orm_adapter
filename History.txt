@@ -1,4 +1,4 @@
-== master
+== 0.0.3
   
   * ActiveRecord's OrmAdapter handles non standard foreign key names [Ian White]
   * fix ruby 1.9.2 problems. [Ian White]
