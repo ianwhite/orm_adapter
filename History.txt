@@ -1,4 +1,11 @@
 == master
+  
+  * fix ruby 1.9.2 problems. [Ian White]
+    - removes "can't add a new key into hash during iteration" problem with ActiveRecord OrmAdapter
+    - removes problem with rspec 2 mocks interacting with ruby 1.9.2 #to_ary
+
+
+== 0.0.2
 
   * Add #get to the API. Ensure both #get and #get! complies with to_key requirements. [José Valim]
   * Extract tests into shared example. Give instructions on how to write a new adapter. [Ian White]

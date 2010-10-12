@@ -9,7 +9,7 @@ describe OrmAdapter do
     its(:adapters) { should include(adapter) }
     
     describe "and the adapter has a model class" do
-      let(:model) { mock('model class') }
+      let(:model) { Class.new }
       
       before { adapter.stub!(:model_classes).and_return([model]) }
       

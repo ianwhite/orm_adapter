@@ -64,14 +64,16 @@ class ActiveRecord::Base
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields
     def conditions_to_fields(conditions)
-      conditions = conditions.dup
+      fields = {}
       conditions.each do |key, value|
         if value.is_a?(ActiveRecord::Base) && klass.column_names.include?("#{key}_id")
-          conditions.delete(key)
-          conditions["#{key}_id"]   = value.id          
-          conditions["#{key}_type"] = value.class.base_class.name if klass.column_names.include?("#{key}_type")
+          fields["#{key}_id"]   = value.id          
+          fields["#{key}_type"] = value.class.base_class.name if klass.column_names.include?("#{key}_type")
+        else
+          fields[key] = value
         end
       end
+      fields
     end
   end
 end
