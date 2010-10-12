@@ -66,9 +66,9 @@ class ActiveRecord::Base
     def conditions_to_fields(conditions)
       fields = {}
       conditions.each do |key, value|
-        if value.is_a?(ActiveRecord::Base) && klass.column_names.include?("#{key}_id")
-          fields["#{key}_id"]   = value.id          
-          fields["#{key}_type"] = value.class.base_class.name if klass.column_names.include?("#{key}_type")
+        if value.is_a?(ActiveRecord::Base) && (assoc = klass.reflect_on_association(key.to_sym)) && assoc.belongs_to?
+          fields[assoc.association_foreign_key] = value.send(value.class.primary_key)          
+          fields[assoc.options[:foreign_type]] = value.class.base_class.name if assoc.options[:polymorphic]
         else
           fields[key] = value
         end

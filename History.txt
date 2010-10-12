@@ -1,5 +1,6 @@
 == master
   
+  * ActiveRecord's OrmAdapter handles non standard foreign key names [Ian White]
   * fix ruby 1.9.2 problems. [Ian White]
     - removes "can't add a new key into hash during iteration" problem with ActiveRecord OrmAdapter
     - removes problem with rspec 2 mocks interacting with ruby 1.9.2 #to_ary
