@@ -6,7 +6,6 @@ require 'yard'
 $:.unshift File.expand_path('lib')
 require 'orm_adapter/version'
 
-task :spec => :check_dependencies
 task :default => :spec
 
 desc "Run the specs"
