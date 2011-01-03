@@ -2,7 +2,8 @@ require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
 require 'yard'
-require File.join(File.dirname(__FILE__), 'lib', 'orm_adapter', 'version')
+$:.push File.expand_path("../lib", __FILE__)
+require "orm_adapter/version"
 
 task :default => :spec
 
