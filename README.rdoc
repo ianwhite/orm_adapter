@@ -43,6 +43,15 @@ orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by
 {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
 
 
+== Development
+
+To run the specs, you can start from the last known good set of gem dependencies in Gemfile.lock.development:
+
+  cp Gemfile.lock.development Gemfile.lock
+  bundle
+  bundle exec rake spec
+
+
 == Copyright
 
-Copyright (c) 2010 Ian White and José Valim. See LICENSE for details.
+Copyright (c) 2010-2011 Ian White and José Valim. See LICENSE for details.
