@@ -48,23 +48,28 @@ module OrmAdapter
 
     # Find the first instance, optionally matching conditions, and specifying order
     #
-    #  User.to_adapter.find_first :name => "Fred"
-    #  User.to_adapter.find_first :order => :name
-    #  User.to_adapter.find_first :conditions => {:name => "Fred"}, :order => [:last_seen, :desc]
-    #  User.to_adapter.find_first :order => [:name, [:last_seen, :desc]]
+    # You can call with just conditions, providing a hash
+    #   
+    #   User.to_adapter.find_first :name => "Fred", :age => 23
     #
-    def find_first(conditions)
+    # Or you can specify :order, and :conditions as keys
+    #
+    #   User.to_adapter.find_first :conditions => {:name => "Fred", :age => 23}
+    #   User.to_adapter.find_first :order => [:age, :desc]
+    #   User.to_adapter.find_first :order => :name, :conditions => {:age => 18}
+    #
+    # When specifying :order, it may be
+    # * a single arg e.g. <tt>:order => :name</tt>
+    # * a single pair with :asc, or :desc as last, e.g. <tt>:order => [:name, :desc]</tt>
+    # * an array of single args or pairs (with :asc or :desc as last), e.g. <tt>:order => [[:name, :asc], [:age, :desc]]</tt>
+    #
+    def find_first(options)
       raise NotSupportedError
     end
 
     # Find all models, optionally matching conditions, and specifying order
-    #
-    #  User.to_adapter.find_all :name => "Fred"
-    #  User.to_adapter.find_all :order => :name
-    #  User.to_adapter.find_all :conditions => {:name => "Fred"}, :order => [:last_seen, :desc]
-    #  User.to_adapter.find_all :order => [:name, [:last_seen, :desc]]
-    #
-    def find_all(conditions)
+    # @see OrmAdapter::Base#find_first for how to specify order and conditions
+    def find_all(options)
       raise NotSupportedError
     end
 

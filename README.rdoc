@@ -15,10 +15,11 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.get!(1)                      # find a record by id
   user_model.find_first(:name => 'fred')  # find first fred
   user_model.find_all(:name => 'fred')    # find all freds
-  user_model.find_all(:order => :name)    # find all freds by name
+  user_model.find_all(:order => :name)    # find all freds, ordered by name
   user_model.create!(:name => 'fred')     # create a fred 
-  
 
+@see OrmAdapter::Base for more details of the supported API
+  
 == Supported ORMs
 
 Currently supported ORMs are *ActiveRecord*, *DataMapper* and *MongoId*.
@@ -35,6 +36,14 @@ ORM Adapter goal is to support a minimum API used by most of the plugins that ne
 ORM Adapter will support only basic methods, as +get+, +find_first+, <tt>create!</tt> and so forth. It is not ORM Adapter's goal to support different query constructions, handle table joins, etc.
 
 If you need complex queries, we recommend you to subclass ORM Adapters in your plugin and extend it expressing these query conditions as part of your domain logic.
+
+
+== Projects using orm_adapter
+
+* {devise}[http://github.com/plataformatec/devise]
+* {pickle}[http://github.com/ianwhite/pickle]
+
+Get in touch if you want your project added to this list
 
 
 == History
