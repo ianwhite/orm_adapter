@@ -47,7 +47,7 @@ namespace :release do
       raise "** repo is not clean, try committing some files"
     end
     
-    if git.object('HEAD') != git.object('origin/master')
+    if git.object('HEAD').sha != git.object('origin/master').sha
       raise "** origin does not match HEAD, have you pushed?"
     end
   end
