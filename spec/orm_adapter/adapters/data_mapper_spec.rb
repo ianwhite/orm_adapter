@@ -12,6 +12,7 @@ else
       include DataMapper::Resource
       property :id,   Serial
       property :name, String
+      property :rating, Integer
       has n, :notes, :child_key => [:owner_id]
     end
 

@@ -15,6 +15,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.get!(1)                      # find a record by id
   user_model.find_first(:name => 'fred')  # find first fred
   user_model.find_all(:name => 'fred')    # find all freds
+  user_model.find_all(:order => :name)    # find all freds by name
   user_model.create!(:name => 'fred')     # create a fred 
   
 

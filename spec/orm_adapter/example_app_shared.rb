@@ -80,43 +80,81 @@ shared_examples_for "example app with orm_adapter" do
       end
     end
   
-    describe "#find_first(conditions)" do
-      it "should return first model matching conditions, if it exists" do
-        user = create_model(user_class, :name => "Fred")
-        user_adapter.find_first(:name => "Fred").should == user
+    describe "#find_first" do
+      describe "(conditions)" do
+        it "should return first model matching conditions, if it exists" do
+          user = create_model(user_class, :name => "Fred")
+          user_adapter.find_first(:name => "Fred").should == user
+        end
+
+        it "should return nil if no conditions match" do
+          user_adapter.find_first(:name => "Betty").should == nil
+        end
+      
+        it "when conditions contain associated object, should return first model if it exists" do
+          user = create_model(user_class)
+          note = create_model(note_class, :owner => user)
+          note_adapter.find_first(:owner => user).should == note
+        end
+      end
+    
+      describe "(:order => <order array>)" do
+        it "should return first model in specified order" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user_adapter.find_first(:order => [:name, [:rating, :desc]]).should == user2
+        end
+      end
+          
+      describe "(:conditions => <conditions hash>, :order => <order array>)" do
+        it "should return first model matching conditions, in specified order" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user_adapter.find_first(:conditions => {:name => "Fred"}, :order => [:rating, :desc]).should == user2
+        end
+      end
+    end
+
+    describe "#find_all" do
+      describe "(conditions)" do
+        it "should return only models matching conditions" do
+          user1 = create_model(user_class, :name => "Fred")
+          user2 = create_model(user_class, :name => "Fred")
+          user3 = create_model(user_class, :name => "Betty")
+          user_adapter.find_all(:name => "Fred").should == [user1, user2]
+        end
+
+        it "should return empty array if no conditions match" do
+          user_adapter.find_all(:name => "Fred").should == []
+        end
+      
+        it "when conditions contain associated object, should return first model if it exists" do
+          user1, user2 = create_model(user_class), create_model(user_class)
+          note1 = create_model(note_class, :owner => user1)
+          note2 = create_model(note_class, :owner => user2)
+          note_adapter.find_all(:owner => user2).should == [note2]
+        end
       end
 
-      it "should return nil if no conditions match" do
-        user_adapter.find_first(:name => "Betty").should == nil
+      describe "(:order => <order array>)" do
+        it "should return all models in specified order" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user3 = create_model(user_class, :name => "Betty", :rating => 1)
+          user_adapter.find_all(:order => [:name, [:rating, :desc]]).should == [user3, user2, user1]
+        end
       end
       
-      it "when conditions contain associated object, should return first model if it exists" do
-        user = create_model(user_class)
-        note = create_model(note_class, :owner => user)
-        note_adapter.find_first(:owner => user).should == note
+      describe "(:conditions => <conditions hash>, :order => <order array>)" do
+        it "should return only models matching conditions, in specified order" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user3 = create_model(user_class, :name => "Betty", :rating => 1)
+          user_adapter.find_all(:conditions => {:name => "Fred"}, :order => [:rating, :desc]).should == [user2, user1]
+        end
       end
     end
     
-    describe "#find_all(conditions)" do
-      it "should return only models matching conditions" do
-        user1 = create_model(user_class, :name => "Fred")
-        user2 = create_model(user_class, :name => "Fred")
-        user3 = create_model(user_class, :name => "Betty")
-        user_adapter.find_all(:name => "Fred").should == [user1, user2]
-      end
-
-      it "should return empty array if no conditions match" do
-        user_adapter.find_all(:name => "Fred").should == []
-      end
-      
-      it "when conditions contain associated object, should return first model if it exists" do
-        user1, user2 = create_model(user_class), create_model(user_class)
-        note1 = create_model(note_class, :owner => user1)
-        note2 = create_model(note_class, :owner => user2)
-        note_adapter.find_all(:owner => user2).should == [note2]
-      end
-    end
-
     describe "#create!(attributes)" do
       it "should create a model with the passed attributes" do
         user = user_adapter.create!(:name => "Fred")

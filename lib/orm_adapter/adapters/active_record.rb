@@ -35,27 +35,29 @@ class ActiveRecord::Base
       klass.column_names
     end
 
-    # Get an instance by id of the model
+    # @see OrmAdapter::Base#get!
     def get!(id)
       klass.find(wrap_key(id))
     end
 
-    # Get an instance by id of the model
+    # @see OrmAdapter::Base#get
     def get(id)
       klass.first :conditions => { klass.primary_key => wrap_key(id) }
     end
 
-    # Find the first instance matching conditions
-    def find_first(conditions)
-      klass.first :conditions => conditions_to_fields(conditions)
+    # @see OrmAdapter::Base#find_first
+    def find_first(options)
+      conditions, order = extract_conditions_and_order!(options)
+      klass.first :conditions => conditions_to_fields(conditions), :order => order_clause(order)
     end
 
-    # Find all models matching conditions
-    def find_all(conditions)
-      klass.all :conditions => conditions_to_fields(conditions)
+    # @see OrmAdapter::Base#find_all
+    def find_all(options)
+      conditions, order = extract_conditions_and_order!(options)
+      klass.all :conditions => conditions_to_fields(conditions), :order => order_clause(order)
     end
     
-    # Create a model using attributes
+    # @see OrmAdapter::Base#create!
     def create!(attributes)
       klass.create!(attributes)
     end
@@ -74,6 +76,10 @@ class ActiveRecord::Base
         end
       end
       fields
+    end
+    
+    def order_clause(order)
+      order.map {|pair| "#{pair[0]} #{pair[1]}"}.join(",")
     end
   end
 end

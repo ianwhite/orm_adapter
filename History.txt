@@ -1,3 +1,9 @@
+== 0.0.4
+  
+  * Adds ability to order results from #find_first and #find_all [Ian White]
+  * Rationalise development dependencies and release process [Ian White]
+  
+
 == 0.0.3
   
   * ActiveRecord's OrmAdapter handles non standard foreign key names [Ian White]

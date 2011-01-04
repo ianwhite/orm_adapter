@@ -8,14 +8,13 @@ else
 
   ActiveRecord::Migration.suppress_messages do
     ActiveRecord::Schema.define(:version => 0) do
-      create_table(:users, :force => true) {|t| t.string :name; t.belongs_to :site }
+      create_table(:users, :force => true) {|t| t.string :name; t.integer :rating; }
       create_table(:notes, :force => true) {|t| t.belongs_to :owner, :polymorphic => true }
     end
   end
   
   module ArOrmSpec
     class User < ActiveRecord::Base
-      belongs_to :site, :class_name => "ArOrmSpec::Site"
       has_many :notes, :as => :owner
     end
 

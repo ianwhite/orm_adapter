@@ -23,29 +23,37 @@ module DataMapper
         klass.properties.map(&:name)
       end
 
-      # Get an instance by id of the model
+      # @see OrmAdapter::Base#get!
       def get!(id)
         klass.get!(id)
       end
 
-      # Get an instance by id of the model
+      # @see OrmAdapter::Base#get
       def get(id)
         klass.get(id)
       end
 
-      # Find the first instance matching conditions
-      def find_first(conditions)
-        klass.first(conditions)
+      # @see OrmAdapter::Base#find_first
+      def find_first(options)
+        conditions, order = extract_conditions_and_order!(options)
+        klass.first :conditions => conditions, :order => order_clause(order)
       end
 
-      # Find all models matching conditions
-      def find_all(conditions)
-        klass.all(conditions)
+      # @see OrmAdapter::Base#find_all
+      def find_all(options)
+        conditions, order = extract_conditions_and_order!(options)
+        klass.all :conditions => conditions, :order => order_clause(order)
       end
     
-      # Create a model using attributes
+      # @see OrmAdapter::Base#create!
       def create!(attributes)
         klass.create(attributes)
+      end
+      
+    protected
+      
+      def order_clause(order)
+        order.map {|pair| pair.first.send(pair.last)}
       end
     end
   end

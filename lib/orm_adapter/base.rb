@@ -46,12 +46,24 @@ module OrmAdapter
       raise NotSupportedError
     end
 
-    # Find the first instance matching conditions
+    # Find the first instance, optionally matching conditions, and specifying order
+    #
+    #  User.to_adapter.find_first :name => "Fred"
+    #  User.to_adapter.find_first :order => :name
+    #  User.to_adapter.find_first :conditions => {:name => "Fred"}, :order => [:last_seen, :desc]
+    #  User.to_adapter.find_first :order => [:name, [:last_seen, :desc]]
+    #
     def find_first(conditions)
       raise NotSupportedError
     end
 
-    # Find all models matching conditions
+    # Find all models, optionally matching conditions, and specifying order
+    #
+    #  User.to_adapter.find_all :name => "Fred"
+    #  User.to_adapter.find_all :order => :name
+    #  User.to_adapter.find_all :conditions => {:name => "Fred"}, :order => [:last_seen, :desc]
+    #  User.to_adapter.find_all :order => [:name, [:last_seen, :desc]]
+    #
     def find_all(conditions)
       raise NotSupportedError
     end
@@ -65,6 +77,31 @@ module OrmAdapter
 
     def wrap_key(key)
       key.is_a?(Array) ? key.first : key
+    end
+    
+    # given an options hash, with optional :conditions and :order keys, returns conditions and normalized order
+    def extract_conditions_and_order!(options = {})
+      order = normalize_order(options.delete(:order))
+      conditions = options.delete(:conditions) || options
+      [conditions, order]
+    end
+    
+    # given an order argument, returns an array of pairs, with each pair containing the attribute, and :asc or :desc
+    def normalize_order(order)
+      order = Array(order)
+      
+      if order.length == 2 && !order[0].is_a?(Array) && [:asc, :desc].include?(order[1])
+        order = [order]
+      else
+        order = order.map {|pair| pair.is_a?(Array) ? pair : [pair, :asc] }
+      end
+      
+      order.each do |pair|
+        pair.length == 2 or raise ArgumentError, "each order clause must be a pair (unknown clause #{pair.inspect})"
+        [:asc, :desc].include?(pair[1]) or raise ArgumentError, "order must be specified with :asc or :desc (unknown key #{pair[1].inspect})"
+      end
+      
+      order
     end
   end
 

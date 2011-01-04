@@ -13,6 +13,7 @@ else
     class User
       include Mongoid::Document
       field :name
+      field :rating
       has_many_related :notes, :foreign_key => :owner_id, :class_name => 'MongoidOrmSpec::Note'
     end
 
