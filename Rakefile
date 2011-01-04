@@ -20,7 +20,7 @@ end
 
 namespace :release do
   task :rubygems => :pre do
-    system "gem push orm_adapter-#{OrmAdapter::VERSION}"
+    system "gem push orm_adapter-#{OrmAdapter::VERSION}.gem"
   end
   
   task :github => :pre do
