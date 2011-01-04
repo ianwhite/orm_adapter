@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_development_dependency "bundler", ">= 1.0.0"
+  s.add_development_dependency "git", ">= 1.2.5"
   s.add_development_dependency "yard", ">= 0.6.0"
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "activerecord", ">= 3.0.0"

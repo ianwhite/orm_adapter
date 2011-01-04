@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
 require 'yard'
+require 'git'
 $:.push File.expand_path("../lib", __FILE__)
 require "orm_adapter/version"
 
@@ -18,16 +19,37 @@ task :build do
 end
 
 namespace :release do
-  task :rubygems => :build do
+  task :rubygems => :pre do
     system "gem push orm_adapter-#{OrmAdapter::VERSION}"
   end
   
-  task :github => :build do
-    `git rev-parse HEAD` == `git rev-parse origin/master` or raise "\n** origin does not match HEAD, have you pushed?"
+  task :github => :pre do
     tag = "v#{OrmAdapter::VERSION}"
-    `git tag`.split("\n").include?(tag) and raise "\n** tag: #{tag} is already tagged."
-    `git tag #{tag}`
-    `git push --tags`
+    git = Git.open('.')
+    
+    if (git.tag(tag) rescue nil)
+      raise "** repo is already tagged with: #{tag}"
+    end
+    
+    git.add_tag(tag)
+    git.push('origin', tag)
+  end
+  
+  task :pre => [:spec, :build] do
+    git = Git.open('.')
+    
+    if File.exists?("Gemfile.lock") && File.read("Gemfile.lock") != File.read("Gemfile.lock.development")
+      cp "Gemfile.lock", "Gemfile.lock.development"
+      raise "** Gemfile.lock.development has been updated, please commit these changes."
+    end
+    
+    if (git.status.changed + git.status.added + git.status.deleted).any?
+      raise "** repo is not clean, try committing some files"
+    end
+    
+    if git.object('HEAD') != git.object('origin/master')
+      raise "** origin does not match HEAD, have you pushed?"
+    end
   end
   
   task :all => ['release:github', 'release:rubygems']
