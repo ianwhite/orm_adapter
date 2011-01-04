@@ -47,6 +47,8 @@ orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by
 
 To run the specs, you can start from the last known good set of gem dependencies in Gemfile.lock.development:
 
+  git clone http://github.com/ianwhite/orm_adapter
+  cd orm_adapter
   cp Gemfile.lock.development Gemfile.lock
   bundle
   bundle exec rake spec
