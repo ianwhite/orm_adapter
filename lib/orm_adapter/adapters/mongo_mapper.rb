@@ -19,7 +19,7 @@ module MongoMapper
 
       # get a list of column names for a given class
       def column_names
-        klass.fields.keys
+        klass.column_names
       end
 
       # @see OrmAdapter::Base#get!
