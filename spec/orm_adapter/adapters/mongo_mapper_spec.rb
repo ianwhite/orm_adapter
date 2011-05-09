@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'orm_adapter/example_app_shared'
 
-if !defined?(MongoMapper)
-  puts "** require 'mongo_mapper' to run the specs in #{__FILE__}"
+if !defined?(MongoMapper) || !(Mongo::Connection.new.db('orm_adapter_spec') rescue nil)
+  puts "** require 'mongo_mapper' and start mongod to run the specs in #{__FILE__}"
 else  
   
   MongoMapper.connection = Mongo::Connection.new
