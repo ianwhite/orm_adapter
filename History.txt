@@ -1,3 +1,8 @@
+== 0.0.5
+  
+  * Adds Mongo Mapper adapter [Luke Cunningham]
+  
+
 == 0.0.4
   
   * Adds ability to order results from #find_first and #find_all [Ian White]

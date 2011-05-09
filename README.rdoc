@@ -7,7 +7,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
 
   require 'orm_adapter'
 
-  User # is it an ActiveRecord, DM Resource, or MongoId Document?
+  User # is it an ActiveRecord, DM Resource, MongoMapper or MongoId Document?
   
   User.to_adapter.find_first :name => 'Fred' # we don't care!
   
@@ -22,9 +22,9 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   
 == Supported ORMs
 
-Currently supported ORMs are *ActiveRecord*, *DataMapper* and *MongoId*.
+Currently supported ORMs are *ActiveRecord*, *DataMapper*, *MongoMapper*, and *MongoId*.
 
-We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these three major ORMs working.
+We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these major ORMs working.
 
 To write an adapter look at <tt>lib/orm_adapter/adapters/active_record.rb</tt> for an example of implementation.  To see how to test it, look at <tt>spec/orm_adapter/example_app_shared.rb</tt>, <tt>spec/orm_adapter/adapters/active_record_spec.rb</tt>.  You'll need to require the target ORM in <tt>spec/spec_helper.rb</tt>
 
@@ -51,6 +51,8 @@ Get in touch if you want your project added to this list
 orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox], {Josh Bassett}[http://github.com/nullobject], {Marc Lee}[http://github.com/maleko], and {Sebastian Zuchmanski}[http://github.com/sebcioz].
 
 {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
+
+{Luke Cunningham}[http://github.com/icaruswings] contributes the Mongo Mapper adapter.
 
 
 == Development
