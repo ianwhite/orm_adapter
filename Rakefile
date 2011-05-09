@@ -43,7 +43,7 @@ namespace :release do
       raise "** Gemfile.lock.development has been updated, please commit these changes."
     end
     
-    if (git.status.changed + git.status.added + git.status.deleted).any?
+    if git.status.changed.any? || git.status.added.any? || git.status.deleted.any?
       raise "** repo is not clean, try committing some files"
     end
     
