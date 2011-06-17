@@ -5,6 +5,7 @@
 .rvmrc
 .bundle
 Gemfile.lock
+spec/orm_adapter/adapters/active_resource_server/server.log
 
 # built docs
 .yardoc
