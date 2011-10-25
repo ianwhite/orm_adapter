@@ -63,7 +63,7 @@ class ActiveResource::Base
     def conditions_to_fields(conditions)
       fields = {}
       conditions.each do |key, value|
-        if !klass.schema[key] && klass.schema[key.to_s + "_id"]
+        if klass.schema && !klass.schema[key] && klass.schema[key.to_s + "_id"]
           fields[key.to_s + "_id"] = value
         else
           fields[key] = value
