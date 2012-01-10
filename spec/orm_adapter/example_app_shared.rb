@@ -93,8 +93,10 @@ shared_examples_for "example app with orm_adapter" do
       
         it "when conditions contain associated object, should return first model if it exists" do
           user = create_model(user_class)
-          note = create_model(note_class, :owner => user)
-          note_adapter.find_first(:owner => user).should == note
+          user2 = create_model(user_class)
+          note = create_model(note_class, :owner => user2)
+          note2 = create_model(note_class, :owner => user)
+          note_adapter.find_first(:owner => user).should == note2
         end
       end
     
