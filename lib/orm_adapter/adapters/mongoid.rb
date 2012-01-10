@@ -29,7 +29,7 @@ module Mongoid
 
       # @see OrmAdapter::Base#get
       def get(id)
-        klass.first(:conditions => { :id => wrap_key(id) })
+        klass.where(:_id => wrap_key(id)).first
       end
 
       # @see OrmAdapter::Base#find_first
