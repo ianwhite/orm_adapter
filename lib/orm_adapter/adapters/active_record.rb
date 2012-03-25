@@ -4,11 +4,8 @@ rescue LoadError
   require 'active_record'
 end
 
-class ActiveRecord::Base
-  extend OrmAdapter::ToAdapter
-  
-  class OrmAdapter < ::OrmAdapter::Base
-
+module OrmAdapter
+  class ActiveRecord < Base
     # Do not consider these to be part of the class list
     def self.except_classes
       @@except_classes ||= [
@@ -56,37 +53,42 @@ class ActiveRecord::Base
       conditions, order = extract_conditions_and_order!(options)
       klass.all :conditions => conditions_to_fields(conditions), :order => order_clause(order)
     end
-    
+
     # @see OrmAdapter::Base#create!
     def create!(attributes)
       klass.create!(attributes)
     end
-    
+
   protected
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields
     def conditions_to_fields(conditions)
       fields = {}
       conditions.each do |key, value|
-        if value.is_a?(ActiveRecord::Base) && (assoc = klass.reflect_on_association(key.to_sym)) && assoc.belongs_to?
-          
-          if ActiveRecord::VERSION::STRING < "3.1"
-            fields[assoc.primary_key_name] = value.send(value.class.primary_key)          
+        if value.is_a?(::ActiveRecord::Base) && (assoc = klass.reflect_on_association(key.to_sym)) && assoc.belongs_to?
+
+          if ::ActiveRecord::VERSION::STRING < "3.1"
+            fields[assoc.primary_key_name] = value.send(value.class.primary_key)
             fields[assoc.options[:foreign_type]] = value.class.base_class.name.to_s if assoc.options[:polymorphic]
           else # >= 3.1
-            fields[assoc.foreign_key] = value.send(value.class.primary_key)          
+            fields[assoc.foreign_key] = value.send(value.class.primary_key)
             fields[assoc.foreign_type] = value.class.base_class.name.to_s if assoc.options[:polymorphic]
           end
-          
+
         else
           fields[key] = value
         end
       end
       fields
     end
-    
+
     def order_clause(order)
       order.map {|pair| "#{pair[0]} #{pair[1]}"}.join(",")
     end
   end
+end
+
+ActiveSupport.on_load(:active_record) do
+  extend ::OrmAdapter::ToAdapter
+  self::OrmAdapter = ::OrmAdapter::ActiveRecord
 end
