@@ -6,7 +6,7 @@ end
 
 module OrmAdapter
   class ActiveRecord < Base
-      # Do not consider these to be part of the class list
+    # Do not consider these to be part of the class list
     def self.except_classes
       @@except_classes ||= [
         "CGI::Session::ActiveRecordStore::Session",
