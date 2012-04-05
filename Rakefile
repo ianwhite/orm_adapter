@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
-require 'yard'
-require 'git'
 $:.push File.expand_path("../lib", __FILE__)
 require "orm_adapter/version"
 
@@ -10,8 +8,15 @@ task :default => :spec
 
 RSpec::Core::RakeTask.new(:spec)
 
-YARD::Rake::YardocTask.new(:doc) do |t|
-  t.files   = ['lib/**/*.rb', 'README.rdoc']
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new(:doc) do |t|
+    t.files   = ['lib/**/*.rb', 'README.rdoc']
+  end
+rescue LoadError
+  task :doc do
+    puts "install yard to generate the docs"
+  end
 end
 
 task :build do
@@ -24,6 +29,7 @@ namespace :release do
   end
   
   task :github => :pre do
+    require 'git'
     tag = "v#{OrmAdapter::VERSION}"
     git = Git.open('.')
     
@@ -36,6 +42,7 @@ namespace :release do
   end
   
   task :pre => [:spec, :build] do
+    require 'git'
     git = Git.open('.')
     
     if File.exists?("Gemfile.lock") && File.read("Gemfile.lock") != File.read("Gemfile.lock.development")
