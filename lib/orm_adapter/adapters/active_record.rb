@@ -5,18 +5,13 @@ module OrmAdapter
     # Do not consider these to be part of the class list
     def self.except_classes
       @@except_classes ||= [
-        "CGI::Session::ActiveRecordStore::Session",
         "ActiveRecord::SessionStore::Session"
       ]
     end
 
     # Gets a list of the available models for this adapter
     def self.model_classes
-      begin
-        klasses = ::ActiveRecord::Base.__send__(:descendants) # Rails 3
-      rescue
-        klasses = ::ActiveRecord::Base.__send__(:subclasses) # Rails 2
-      end
+      klasses = ::ActiveRecord::Base.__send__(:descendants)
 
       klasses.select do |klass|
         !klass.abstract_class? && !except_classes.include?(klass.name)
@@ -35,19 +30,19 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#get
     def get(id)
-      klass.first :conditions => { klass.primary_key => wrap_key(id) }
+      klass.where(klass.primary_key => wrap_key(id)).first
     end
 
     # @see OrmAdapter::Base#find_first
     def find_first(options)
       conditions, order = extract_conditions_and_order!(options)
-      klass.first :conditions => conditions_to_fields(conditions), :order => order_clause(order)
+      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
     end
 
     # @see OrmAdapter::Base#find_all
     def find_all(options)
       conditions, order = extract_conditions_and_order!(options)
-      klass.all :conditions => conditions_to_fields(conditions), :order => order_clause(order)
+      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).all
     end
 
     # @see OrmAdapter::Base#create!

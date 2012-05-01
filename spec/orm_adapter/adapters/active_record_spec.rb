@@ -37,7 +37,7 @@ else
         subject { ActiveRecord::Base::OrmAdapter }
 
         specify "#except_classes should return the names of active record session store classes" do
-          subject.except_classes.should == ["CGI::Session::ActiveRecordStore::Session", "ActiveRecord::SessionStore::Session"]
+          subject.except_classes.should == ["ActiveRecord::SessionStore::Session"]
         end
 
         specify "#model_classes should return all of the non abstract model classes (that are not in except_classes)" do
