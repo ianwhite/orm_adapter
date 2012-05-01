@@ -1,8 +1,4 @@
-begin
-  require 'active_record'
-rescue LoadError
-  require 'activerecord'
-end
+require 'active_record'
 
 module OrmAdapter
   class ActiveRecord < Base
