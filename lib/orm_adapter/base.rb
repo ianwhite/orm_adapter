@@ -78,6 +78,15 @@ module OrmAdapter
       raise NotSupportedError
     end
 
+    # Destroy an instance by id of the model.
+    # This should comply with ActiveModel#to_key API, i.e.:
+    #
+    #   User.to_adapter.destroy(@user.to_key)
+    #
+    def destroy(id)
+      raise NotSupportedError
+    end
+
     protected
 
     def wrap_key(key)

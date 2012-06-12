@@ -177,5 +177,21 @@ shared_examples_for "example app with orm_adapter" do
         reload_model(user).notes.should == notes
       end
     end
+
+    describe "#destroy(id)" do
+      it "should destroy the instance with id if it exists" do
+        user = create_model(user_class)
+        user_adapter.destroy(user.id).should == true
+      end
+
+      it "should allow to_key like arguments" do
+        user = create_model(user_class)
+        user_adapter.destroy(user.to_key).should == true
+      end
+
+      it "should return nil if there is no instance with that id" do
+        user_adapter.destroy("non-exitent id").should be_nil
+      end
+    end
   end
 end
