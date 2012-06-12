@@ -1,4 +1,4 @@
-= ORM Adapter
+= ORM Adapter {<img src="https://secure.travis-ci.org/ianwhite/orm_adapter.png?branch=master" alt="Build Status" />}[http://travis-ci.org/ianwhite/orm_adapter]
 
 Provides a single point of entry for popular ruby ORMs.  Its target audience is gem authors who want to support more than one ORM.
 
