@@ -178,7 +178,7 @@ shared_examples_for "example app with orm_adapter" do
       end
     end
 
-    describe "#destroy(id)" do
+    describe "#destroy(instance)" do
       it "should destroy the instance if it exists" do
         user = create_model(user_class)
         user_adapter.destroy(user).should == true
