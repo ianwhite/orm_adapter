@@ -70,4 +70,4 @@ To run the specs, you can start from the last known good set of gem dependencies
 
 == Copyright
 
-Copyright (c) 2010-2011 Ian White and José Valim. See LICENSE for details.
+Copyright (c) 2010-2012 Ian White and José Valim. See LICENSE for details.
