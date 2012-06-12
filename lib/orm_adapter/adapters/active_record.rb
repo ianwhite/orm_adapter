@@ -50,6 +50,11 @@ module OrmAdapter
       klass.create!(attributes)
     end
 
+    # @see OrmAdapter::Base#destroy
+    def destroy(object)
+      object.destroy && true if valid_object?(object)
+    end
+
   protected
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields

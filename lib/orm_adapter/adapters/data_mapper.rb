@@ -50,6 +50,11 @@ module DataMapper
         klass.create(attributes)
       end
       
+      # @see OrmAdapter::Base#destroy
+      def destroy(object)
+        object.destroy if valid_object?(object)
+      end
+
     protected
       
       def order_clause(order)

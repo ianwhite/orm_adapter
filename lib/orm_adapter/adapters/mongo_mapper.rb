@@ -51,6 +51,11 @@ module MongoMapper
         klass.create!(attributes)
       end
 
+      # @see OrmAdapter::Base#destroy
+      def destroy(object)
+        object.destroy if valid_object?(object)
+      end
+
     protected
 
       # converts and documents to ids
