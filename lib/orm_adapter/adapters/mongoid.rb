@@ -50,8 +50,8 @@ module Mongoid
       end
   
       # @see OrmAdapter::Base#destroy
-      def destroy(id)
-        get(wrap_key(id)).try(:destroy)
+      def destroy(object)
+        object.destroy if valid_object?(object)
       end
 
     protected

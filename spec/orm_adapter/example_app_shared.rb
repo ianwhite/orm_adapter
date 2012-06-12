@@ -179,18 +179,20 @@ shared_examples_for "example app with orm_adapter" do
     end
 
     describe "#destroy(id)" do
-      it "should destroy the instance with id if it exists" do
+      it "should destroy the instance if it exists" do
         user = create_model(user_class)
-        user_adapter.destroy(user.id).should == true
+        user_adapter.destroy(user).should == true
+        user_adapter.get(user.id).should be_nil
       end
 
-      it "should allow to_key like arguments" do
-        user = create_model(user_class)
-        user_adapter.destroy(user.to_key).should == true
+      it "should return nil if passed with an invalid instance" do
+        user_adapter.destroy("non-exitent instance").should be_nil
       end
 
-      it "should return nil if there is no instance with that id" do
-        user_adapter.destroy("non-exitent id").should be_nil
+      it "should not destroy the instance if it doesn't match the model class" do
+        user = create_model(user_class)
+        note_adapter.destroy(user).should be_nil
+        user_adapter.get(user.id).should == user
       end
     end
   end

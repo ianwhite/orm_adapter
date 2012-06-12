@@ -51,8 +51,8 @@ module DataMapper
       end
       
       # @see OrmAdapter::Base#destroy
-      def destroy(id)
-        get(id).try(:destroy)
+      def destroy(object)
+        object.destroy if valid_object?(object)
       end
 
     protected

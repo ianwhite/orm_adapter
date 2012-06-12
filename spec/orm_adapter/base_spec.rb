@@ -23,6 +23,13 @@ describe OrmAdapter::Base do
       subject.send(:extract_conditions_and_order!, :conditions => conditions, :order => order).should == [conditions, order]
     end
     
+    describe "#valid_object?" do
+      it "determines whether an object is valid for the current model class" do
+        subject.send(:valid_object?, Object.new).should be_true
+        subject.send(:valid_object?, String.new).should be_false
+      end
+    end
+
     describe "#normalize_order" do
       specify "(nil) returns []" do
         subject.send(:normalize_order, nil).should == []

@@ -51,8 +51,8 @@ module OrmAdapter
     end
 
     # @see OrmAdapter::Base#destroy
-    def destroy(id)
-      get(wrap_key(id)).try(:destroy) && true
+    def destroy(object)
+      object.destroy && true if valid_object?(object)
     end
 
   protected
