@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    orm_adapter (0.0.8)
+    orm_adapter (0.1.0)
 
 GEM
   remote: http://rubygems.org/
