@@ -60,7 +60,7 @@ shared_examples_for "example app with orm_adapter" do
       end
 
       it "should raise an error if there is no instance with that id" do
-        lambda { user_adapter.get!("non-exitent id") }.should raise_error
+        lambda { user_adapter.get!("nonexistent id") }.should raise_error
       end
     end
 
@@ -76,10 +76,10 @@ shared_examples_for "example app with orm_adapter" do
       end
 
       it "should return nil if there is no instance with that id" do
-        user_adapter.get("non-exitent id").should be_nil
+        user_adapter.get("nonexistent id").should be_nil
       end
     end
-  
+
     describe "#find_first" do
       describe "(conditions)" do
         it "should return first model matching conditions, if it exists" do
@@ -186,7 +186,7 @@ shared_examples_for "example app with orm_adapter" do
       end
 
       it "should return nil if passed with an invalid instance" do
-        user_adapter.destroy("non-exitent instance").should be_nil
+        user_adapter.destroy("nonexistent instance").should be_nil
       end
 
       it "should not destroy the instance if it doesn't match the model class" do
