@@ -42,7 +42,7 @@ module OrmAdapter
     #
     #   User.to_adapter.get(@user.to_key) == @user
     #
-    def get
+    def get(id)
       raise NotSupportedError
     end
 
