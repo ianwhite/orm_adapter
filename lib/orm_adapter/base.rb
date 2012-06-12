@@ -42,7 +42,7 @@ module OrmAdapter
     #
     #   User.to_adapter.get(@user.to_key) == @user
     #
-    def get
+    def get(id)
       raise NotSupportedError
     end
 
@@ -78,7 +78,16 @@ module OrmAdapter
       raise NotSupportedError
     end
 
+    # Destroy an instance by passing in the instance itself.
+    def destroy(object)
+      raise NotSupportedError
+    end
+
     protected
+
+    def valid_object?(object)
+      object.class == klass
+    end
 
     def wrap_key(key)
       key.is_a?(Array) ? key.first : key
