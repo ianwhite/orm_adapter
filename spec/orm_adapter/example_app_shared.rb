@@ -129,6 +129,13 @@ shared_examples_for "example app with orm_adapter" do
           user_adapter.find_all(:name => "Fred").should == [user1, user2]
         end
 
+        it "should return all models if no conditions passed" do
+          user1 = create_model(user_class, :name => "Fred")
+          user2 = create_model(user_class, :name => "Fred")
+          user3 = create_model(user_class, :name => "Betty")
+          user_adapter.find_all.should == [user1, user2, user3]
+        end
+
         it "should return empty array if no conditions match" do
           user_adapter.find_all(:name => "Fred").should == []
         end
