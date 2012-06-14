@@ -19,18 +19,18 @@
 #   end
 #
 shared_examples_for "example app with orm_adapter" do
-  
+
   def create_model(klass, attrs = {})
     klass.create!(attrs)
   end
-  
+
   def reload_model(model)
     model.class.find(model.id)
   end
-      
+
   describe "an ORM class" do
     subject { note_class }
-  
+
     it "#to_adapter should return an adapter instance" do
       subject.to_adapter.should be_a(OrmAdapter::Base)
     end
@@ -43,11 +43,11 @@ shared_examples_for "example app with orm_adapter" do
       subject.to_adapter.object_id.should == subject.to_adapter.object_id
     end
   end
-  
+
   describe "adapter instance" do
     let(:note_adapter) { note_class.to_adapter }
     let(:user_adapter) { user_class.to_adapter }
-    
+
     describe "#get!(id)" do
       it "should return the instance with id if it exists" do
         user = create_model(user_class)
@@ -90,14 +90,19 @@ shared_examples_for "example app with orm_adapter" do
         it "should return nil if no conditions match" do
           user_adapter.find_first(:name => "Betty").should == nil
         end
-      
+
         it "when conditions contain associated object, should return first model if it exists" do
           user = create_model(user_class)
           note = create_model(note_class, :owner => user)
           note_adapter.find_first(:owner => user).should == note
         end
+
+        it "should return the same as gets when an id is passed in as a condition" do
+          user = create_model(user_class, :name => "Fred")
+          user_adapter.find_first(:id => user.id, :name => "Fred").should == user
+        end
       end
-    
+
       describe "(:order => <order array>)" do
         it "should return first model in specified order" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
@@ -105,7 +110,7 @@ shared_examples_for "example app with orm_adapter" do
           user_adapter.find_first(:order => [:name, [:rating, :desc]]).should == user2
         end
       end
-          
+
       describe "(:conditions => <conditions hash>, :order => <order array>)" do
         it "should return first model matching conditions, in specified order" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
@@ -127,7 +132,7 @@ shared_examples_for "example app with orm_adapter" do
         it "should return empty array if no conditions match" do
           user_adapter.find_all(:name => "Fred").should == []
         end
-      
+
         it "when conditions contain associated object, should return first model if it exists" do
           user1, user2 = create_model(user_class), create_model(user_class)
           note1 = create_model(note_class, :owner => user1)
@@ -144,7 +149,7 @@ shared_examples_for "example app with orm_adapter" do
           user_adapter.find_all(:order => [:name, [:rating, :desc]]).should == [user3, user2, user1]
         end
       end
-      
+
       describe "(:conditions => <conditions hash>, :order => <order array>)" do
         it "should return only models matching conditions, in specified order" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
@@ -154,7 +159,7 @@ shared_examples_for "example app with orm_adapter" do
         end
       end
     end
-    
+
     describe "#create!(attributes)" do
       it "should create a model with the passed attributes" do
         user = user_adapter.create!(:name => "Fred")
@@ -164,13 +169,13 @@ shared_examples_for "example app with orm_adapter" do
       it "should raise error when create fails" do
         lambda { user_adapter.create!(:user => create_model(note_class)) }.should raise_error
       end
-      
+
       it "when attributes contain an associated object, should create a model with the attributes" do
         user = create_model(user_class)
         note = note_adapter.create!(:owner => user)
         reload_model(note).owner.should == user
       end
-      
+
       it "when attributes contain an has_many assoc, should create a model with the attributes" do
         notes = [create_model(note_class), create_model(note_class)]
         user = user_adapter.create!(:notes => notes)
