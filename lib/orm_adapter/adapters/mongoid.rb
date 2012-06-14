@@ -33,19 +33,19 @@ module Mongoid
       end
 
       # @see OrmAdapter::Base#find_first
-      def find_first(options)
+      def find_first(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.limit(1).where(conditions_to_fields(conditions)).order_by(order).first
       end
 
       # @see OrmAdapter::Base#find_all
-      def find_all(options)
+      def find_all(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.where(conditions_to_fields(conditions)).order_by(order)
       end
 
       # @see OrmAdapter::Base#create!
-      def create!(attributes)
+      def create!(attributes = {})
         klass.create!(attributes)
       end
 
