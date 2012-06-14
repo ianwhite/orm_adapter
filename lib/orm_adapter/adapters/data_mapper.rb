@@ -4,7 +4,7 @@ module DataMapper
   module Model
     include OrmAdapter::ToAdapter
   end
-  
+
   module Resource
     class OrmAdapter < ::OrmAdapter::Base
 
@@ -34,29 +34,29 @@ module DataMapper
       end
 
       # @see OrmAdapter::Base#find_first
-      def find_first(options)
+      def find_first(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.first :conditions => conditions, :order => order_clause(order)
       end
 
       # @see OrmAdapter::Base#find_all
-      def find_all(options)
+      def find_all(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.all :conditions => conditions, :order => order_clause(order)
       end
-    
+
       # @see OrmAdapter::Base#create!
-      def create!(attributes)
+      def create!(attributes = {})
         klass.create(attributes)
       end
-      
+
       # @see OrmAdapter::Base#destroy
       def destroy(object)
         object.destroy if valid_object?(object)
       end
 
     protected
-      
+
       def order_clause(order)
         order.map {|pair| pair.first.send(pair.last)}
       end

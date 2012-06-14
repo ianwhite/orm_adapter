@@ -34,19 +34,19 @@ module OrmAdapter
     end
 
     # @see OrmAdapter::Base#find_first
-    def find_first(options)
+    def find_first(options = {})
       conditions, order = extract_conditions_and_order!(options)
       klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
     end
 
     # @see OrmAdapter::Base#find_all
-    def find_all(options)
+    def find_all(options = {})
       conditions, order = extract_conditions_and_order!(options)
       klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).all
     end
 
     # @see OrmAdapter::Base#create!
-    def create!(attributes)
+    def create!(attributes = {})
       klass.create!(attributes)
     end
 

@@ -5,7 +5,7 @@ module Mongoid
     module ClassMethods
       include OrmAdapter::ToAdapter
     end
-    
+
     class OrmAdapter < ::OrmAdapter::Base
       # Do not consider these to be part of the class list
       def self.except_classes
@@ -33,22 +33,22 @@ module Mongoid
       end
 
       # @see OrmAdapter::Base#find_first
-      def find_first(options)
+      def find_first(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.limit(1).where(conditions_to_fields(conditions)).order_by(order).first
       end
 
       # @see OrmAdapter::Base#find_all
-      def find_all(options)
+      def find_all(options = {})
         conditions, order = extract_conditions_and_order!(options)
         klass.where(conditions_to_fields(conditions)).order_by(order)
       end
 
       # @see OrmAdapter::Base#create!
-      def create!(attributes)
+      def create!(attributes = {})
         klass.create!(attributes)
       end
-  
+
       # @see OrmAdapter::Base#destroy
       def destroy(object)
         object.destroy if valid_object?(object)
@@ -61,6 +61,8 @@ module Mongoid
         conditions.inject({}) do |fields, (key, value)|
           if value.is_a?(Mongoid::Document) && klass.fields.keys.include?("#{key}_id")
             fields.merge("#{key}_id" => value.id)
+          elsif key.to_s == 'id'
+            fields.merge('_id' => value)
           else
             fields.merge(key => value)
           end

@@ -5,7 +5,7 @@ module MongoMapper
     module ClassMethods
       include OrmAdapter::ToAdapter
     end
-    
+
     class OrmAdapter < ::OrmAdapter::Base
       # Do not consider these to be part of the class list
       def self.except_classes
@@ -33,21 +33,21 @@ module MongoMapper
       end
 
       # @see OrmAdapter::Base#find_first
-      def find_first(conditions)
+      def find_first(conditions = {})
         conditions, order = extract_conditions_and_order!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
         klass.first(conditions_to_fields(conditions))
       end
 
       # @see OrmAdapter::Base#find_all
-      def find_all(conditions)
+      def find_all(conditions = {})
         conditions, order = extract_conditions_and_order!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
         klass.all(conditions_to_fields(conditions))
       end
 
       # @see OrmAdapter::Base#create!
-      def create!(attributes)
+      def create!(attributes = {})
         klass.create!(attributes)
       end
 
