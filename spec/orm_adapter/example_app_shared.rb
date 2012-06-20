@@ -91,8 +91,9 @@ shared_examples_for "example app with orm_adapter" do
           user_adapter.find_first(:name => "Betty").should == nil
         end
         
-        it 'allows no conditions' do
+        it 'should return the first model if no conditions passed' do
           user = create_model(user_class)
+          create_model(user_class)
           user_adapter.find_first.should == user
         end
 
@@ -146,13 +147,6 @@ shared_examples_for "example app with orm_adapter" do
         it "should return empty array if no conditions match" do
           user_adapter.find_all(:name => "Fred").should == []
         end
-        
-        it 'allows no conditions' do
-          user1 = create_model(user_class)
-          user2 = create_model(user_class)
-          user_adapter.find_all.to_set.should == [user1, user2].to_set
-        end
-        
 
         it "when conditions contain associated object, should return first model if it exists" do
           user1, user2 = create_model(user_class), create_model(user_class)
