@@ -96,10 +96,12 @@ shared_examples_for "example app with orm_adapter" do
           note = create_model(note_class, :owner => user)
           note_adapter.find_first(:owner => user).should == note
         end
-
-        it "should return the same as gets when an id is passed in as a condition" do
+        
+        it "understands :id as a primary key condition (allowing scoped finding)" do
+          create_model(user_class, :name => "Fred")
           user = create_model(user_class, :name => "Fred")
           user_adapter.find_first(:id => user.id, :name => "Fred").should == user
+          user_adapter.find_first(:id => user.id, :name => "Not Fred").should be_nil
         end
       end
 
