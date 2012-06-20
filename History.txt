@@ -1,3 +1,8 @@
+== 0.3.0
+
+  * Removes OrmAdapter::Base.model_classes and friends.  This is a BC breaking change if you use .model_classes [Ian White]
+  * Add note about the scope of ORM Adapter re: model instance methods
+
 == 0.2.0
  
   * Normalise :id in find conditions [Tim Galeckas, Ian White]
