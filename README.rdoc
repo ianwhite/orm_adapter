@@ -16,6 +16,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.find_first(:name => 'fred')  # find first fred
   user_model.find_first(:level => 'awesome', :id => 23)
                                           # find user 23, only if it's level is awesome
+  user_model.find_all                     # find all users
   user_model.find_all(:name => 'fred')    # find all freds
   user_model.find_all(:order => :name)    # find all freds, ordered by name
   user_model.create!(:name => 'fred')     # create a fred 
