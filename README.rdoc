@@ -2,7 +2,6 @@
 
 Provides a single point of entry for popular ruby ORMs.  Its target audience is gem authors who want to support more than one ORM.
 
-
 == Example of use
 
   require 'orm_adapter'
@@ -36,20 +35,13 @@ To write an adapter look at <tt>lib/orm_adapter/adapters/active_record.rb</tt> f
 
 == Goals
 
-ORM Adapter goal is to support a minimum API used by most of the plugins that needs agnosticism beyond Active Model.
+ORM Adapter's goal is to support a minimum API used by most of the plugins that needs agnosticism beyond Active Model.  
 
 ORM Adapter will support only basic methods, as +get+, +find_first+, <tt>create!</tt> and so forth. It is not ORM Adapter's goal to support different query constructions, handle table joins, etc.
 
+ORM adapter provides a consistent API for these basic class or 'factory' methods. It does not attempt to unify the behaviour of model instances returned by these methods.  This means that unifying the behaviour of methods such as `model.save`, and `model.valid?` is beyond the scope of orm_adapter.
+
 If you need complex queries, we recommend you to subclass ORM Adapters in your plugin and extend it expressing these query conditions as part of your domain logic.
-
-
-== Projects using orm_adapter
-
-* {devise}[http://github.com/plataformatec/devise]
-* {pickle}[http://github.com/ianwhite/pickle]
-
-Get in touch if you want your project added to this list
-
 
 == History
 
