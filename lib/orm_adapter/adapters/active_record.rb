@@ -2,22 +2,6 @@ require 'active_record'
 
 module OrmAdapter
   class ActiveRecord < Base
-    # Do not consider these to be part of the class list
-    def self.except_classes
-      @@except_classes ||= [
-        "ActiveRecord::SessionStore::Session"
-      ]
-    end
-
-    # Gets a list of the available models for this adapter
-    def self.model_classes
-      klasses = ::ActiveRecord::Base.__send__(:descendants)
-
-      klasses.select do |klass|
-        !klass.abstract_class? && !except_classes.include?(klass.name)
-      end
-    end
-
     # Return list of column/property names
     def column_names
       klass.column_names

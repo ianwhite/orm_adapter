@@ -29,14 +29,6 @@ else
         User.delete_all
         Note.delete_all
       end
-      
-      describe "the OrmAdapter class" do
-        subject { Mongoid::Document::OrmAdapter }
-
-        specify "#model_classes should return all document classes" do
-          (subject.model_classes & [User, Note]).to_set.should == [User, Note].to_set
-        end
-      end
     
       it_should_behave_like "example app with orm_adapter" do
         let(:user_class) { User }

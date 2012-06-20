@@ -32,18 +32,6 @@ else
         User.delete_all
         Note.delete_all
       end
-
-      describe "the OrmAdapter class" do
-        subject { ActiveRecord::Base::OrmAdapter }
-
-        specify "#except_classes should return the names of active record session store classes" do
-          subject.except_classes.should == ["ActiveRecord::SessionStore::Session"]
-        end
-
-        specify "#model_classes should return all of the non abstract model classes (that are not in except_classes)" do
-          subject.model_classes.should include(User, Note)
-        end
-      end
     
       it_should_behave_like "example app with orm_adapter" do
         let(:user_class) { User }

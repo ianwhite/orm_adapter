@@ -14,11 +14,6 @@ module OrmAdapter
       super
     end
 
-    # Gets a list of the available models for this adapter
-    def self.model_classes
-      raise NotImplementedError, "return a list of available models for this adapter"
-    end
-
     def initialize(klass)
       @klass = klass
     end
