@@ -1,3 +1,7 @@
+== 0.2.0
+ 
+  * Normalise :id in find conditions [Tim Galeckas]
+
 == 0.1.0
 
   * Add #destroy(object) to the API [Fred Wu]
