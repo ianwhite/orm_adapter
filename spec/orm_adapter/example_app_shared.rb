@@ -90,7 +90,7 @@ shared_examples_for "example app with orm_adapter" do
         it "should return nil if no conditions match" do
           user_adapter.find_first(:name => "Betty").should == nil
         end
-        
+
         it 'should return the first model if no conditions passed' do
           user = create_model(user_class)
           create_model(user_class)
@@ -102,7 +102,7 @@ shared_examples_for "example app with orm_adapter" do
           note = create_model(note_class, :owner => user)
           note_adapter.find_first(:owner => user).should == note
         end
-        
+
         it "understands :id as a primary key condition (allowing scoped finding)" do
           create_model(user_class, :name => "Fred")
           user = create_model(user_class, :name => "Fred")
@@ -171,6 +171,27 @@ shared_examples_for "example app with orm_adapter" do
           user2 = create_model(user_class, :name => "Fred", :rating => 2)
           user3 = create_model(user_class, :name => "Betty", :rating => 1)
           user_adapter.find_all(:conditions => {:name => "Fred"}, :order => [:rating, :desc]).should == [user2, user1]
+        end
+      end
+
+      describe "(:limit => <number of items>)" do
+        it "should return a limited set of matching models" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user3 = create_model(user_class, :name => "Betty", :rating => 1)
+          user_adapter.find_all(:limit => 1).should == [user1]
+          user_adapter.find_all(:limit => 2).should == [user1, user2]
+        end
+      end
+
+      describe "(:offset => <offset number>) with limit (as DataMapper doesn't allow offset on its own)" do
+        it "should return an offset set of matching models" do
+          user1 = create_model(user_class, :name => "Fred", :rating => 1)
+          user2 = create_model(user_class, :name => "Fred", :rating => 2)
+          user3 = create_model(user_class, :name => "Betty", :rating => 1)
+          user_adapter.find_all(:limit => 3, :offset => 0).should == [user1, user2, user3]
+          user_adapter.find_all(:limit => 3, :offset => 1).should == [user2, user3]
+          user_adapter.find_all(:limit => 1, :offset => 1).should == [user2]
         end
       end
     end

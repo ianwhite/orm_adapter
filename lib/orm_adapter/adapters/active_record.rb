@@ -19,14 +19,14 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#find_first
     def find_first(options = {})
-      conditions, order = extract_conditions_and_order!(options)
+      conditions, order = extract_conditions!(options)
       klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
     end
 
     # @see OrmAdapter::Base#find_all
     def find_all(options = {})
-      conditions, order = extract_conditions_and_order!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).all
+      conditions, order, limit, offset = extract_conditions!(options)
+      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).offset(offset).all
     end
 
     # @see OrmAdapter::Base#create!
