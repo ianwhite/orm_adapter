@@ -88,11 +88,14 @@ module OrmAdapter
       key.is_a?(Array) ? key.first : key
     end
 
-    # given an options hash, with optional :conditions and :order keys, returns conditions and normalized order
-    def extract_conditions_and_order!(options = {})
+    # given an options hash,
+    # with optional :conditions, :order and :limit keys,
+    # returns conditions, normalized order and limit
+    def extract_conditions!(options = {})
       order = normalize_order(options.delete(:order))
+      limit = options.delete(:limit)
       conditions = options.delete(:conditions) || options
-      [conditions, order]
+      [conditions, order, limit]
     end
 
     # given an order argument, returns an array of pairs, with each pair containing the attribute, and :asc or :desc

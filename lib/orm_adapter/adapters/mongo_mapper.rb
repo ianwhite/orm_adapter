@@ -24,15 +24,16 @@ module MongoMapper
 
       # @see OrmAdapter::Base#find_first
       def find_first(conditions = {})
-        conditions, order = extract_conditions_and_order!(conditions)
+        conditions, order = extract_conditions!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
         klass.first(conditions_to_fields(conditions))
       end
 
       # @see OrmAdapter::Base#find_all
       def find_all(conditions = {})
-        conditions, order = extract_conditions_and_order!(conditions)
+        conditions, order, limit = extract_conditions!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
+        conditions = conditions.merge(:limit => limit) unless limit.nil?
         klass.all(conditions_to_fields(conditions))
       end
 

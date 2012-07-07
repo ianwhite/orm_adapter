@@ -24,14 +24,16 @@ module DataMapper
 
       # @see OrmAdapter::Base#find_first
       def find_first(options = {})
-        conditions, order = extract_conditions_and_order!(options)
+        conditions, order = extract_conditions!(options)
         klass.first :conditions => conditions, :order => order_clause(order)
       end
 
       # @see OrmAdapter::Base#find_all
       def find_all(options = {})
-        conditions, order = extract_conditions_and_order!(options)
-        klass.all :conditions => conditions, :order => order_clause(order)
+        conditions, order, limit = extract_conditions!(options)
+        opts = { :conditions => conditions, :order => order_clause(order) }
+        opts = opts.merge({ :limit => limit }) unless limit.nil?
+        klass.all opts
       end
 
       # @see OrmAdapter::Base#create!
