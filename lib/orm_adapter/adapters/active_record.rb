@@ -25,8 +25,8 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#find_all
     def find_all(options = {})
-      conditions, order, limit = extract_conditions!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).all
+      conditions, order, limit, offset = extract_conditions!(options)
+      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).offset(offset).all
     end
 
     # @see OrmAdapter::Base#create!

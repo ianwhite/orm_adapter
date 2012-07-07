@@ -7,29 +7,38 @@ describe OrmAdapter::Base do
     let(:conditions) { {:foo => 'bar'} }
     let(:order) { [[:foo, :asc]] }
     let(:limit) { 1 }
+    let(:offset) { 2 }
 
-    it "(<conditions>) should return [<conditions>, [], nil]" do
-      subject.send(:extract_conditions!, conditions).should == [conditions, [], nil]
+    it "(<conditions>)" do
+      subject.send(:extract_conditions!, conditions).should == [conditions, [], nil, nil]
     end
 
-    it "(:conditions => <conditions>) should return [<conditions>, [], nil]" do
-      subject.send(:extract_conditions!, :conditions => conditions).should == [conditions, [], nil]
+    it "(:conditions => <conditions>)" do
+      subject.send(:extract_conditions!, :conditions => conditions).should == [conditions, [], nil, nil]
     end
 
-    it "(:order => <order>) should return [{}, <order>, nil]" do
-      subject.send(:extract_conditions!, :order => order).should == [{}, order, nil]
+    it "(:order => <order>)" do
+      subject.send(:extract_conditions!, :order => order).should == [{}, order, nil, nil]
     end
 
-    it "(:limit => <limit>) should return [{}, [], <limit>]" do
-      subject.send(:extract_conditions!, :limit => limit).should == [{}, [], limit]
+    it "(:limit => <limit>)" do
+      subject.send(:extract_conditions!, :limit => limit).should == [{}, [], limit, nil]
     end
 
-    it "(:conditions => <conditions>, :order => <order>) should return [<conditions>, <order>, nil]" do
-      subject.send(:extract_conditions!, :conditions => conditions, :order => order).should == [conditions, order, nil]
+    it "(:offset => <offset>)" do
+      subject.send(:extract_conditions!, :offset => offset).should == [{}, [], nil, offset]
     end
 
-    it "(:conditions => <conditions>, :limit => <limit>) should return [<conditions>, [], <limit>]" do
-      subject.send(:extract_conditions!, :conditions => conditions, :limit => limit).should == [conditions, [], limit]
+    it "(:conditions => <conditions>, :order => <order>)" do
+      subject.send(:extract_conditions!, :conditions => conditions, :order => order).should == [conditions, order, nil, nil]
+    end
+
+    it "(:conditions => <conditions>, :limit => <limit>)" do
+      subject.send(:extract_conditions!, :conditions => conditions, :limit => limit).should == [conditions, [], limit, nil]
+    end
+
+    it "(:conditions => <conditions>, :offset => <offset>)" do
+      subject.send(:extract_conditions!, :conditions => conditions, :offset => offset).should == [conditions, [], nil, offset]
     end
 
     describe "#valid_object?" do

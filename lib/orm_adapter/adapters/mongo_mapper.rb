@@ -31,9 +31,10 @@ module MongoMapper
 
       # @see OrmAdapter::Base#find_all
       def find_all(conditions = {})
-        conditions, order, limit = extract_conditions!(conditions)
+        conditions, order, limit, offset = extract_conditions!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
         conditions = conditions.merge(:limit => limit) unless limit.nil?
+        conditions = conditions.merge(:offset => offset) unless limit.nil? || offset.nil?
         klass.all(conditions_to_fields(conditions))
       end
 

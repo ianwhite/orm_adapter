@@ -30,8 +30,8 @@ module Mongoid
 
       # @see OrmAdapter::Base#find_all
       def find_all(options = {})
-        conditions, order, limit = extract_conditions!(options)
-        klass.where(conditions_to_fields(conditions)).order_by(order).limit(limit)
+        conditions, order, limit, offset = extract_conditions!(options)
+        klass.where(conditions_to_fields(conditions)).order_by(order).limit(limit).offset(offset)
       end
 
       # @see OrmAdapter::Base#create!

@@ -89,13 +89,15 @@ module OrmAdapter
     end
 
     # given an options hash,
-    # with optional :conditions, :order and :limit keys,
-    # returns conditions, normalized order and limit
+    # with optional :conditions, :order, :limit and :offset keys,
+    # returns conditions, normalized order, limit and offset
     def extract_conditions!(options = {})
-      order = normalize_order(options.delete(:order))
-      limit = options.delete(:limit)
+      order      = normalize_order(options.delete(:order))
+      limit      = options.delete(:limit)
+      offset     = options.delete(:offset)
       conditions = options.delete(:conditions) || options
-      [conditions, order, limit]
+
+      [conditions, order, limit, offset]
     end
 
     # given an order argument, returns an array of pairs, with each pair containing the attribute, and :asc or :desc

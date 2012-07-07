@@ -30,9 +30,10 @@ module DataMapper
 
       # @see OrmAdapter::Base#find_all
       def find_all(options = {})
-        conditions, order, limit = extract_conditions!(options)
+        conditions, order, limit, offset = extract_conditions!(options)
         opts = { :conditions => conditions, :order => order_clause(order) }
         opts = opts.merge({ :limit => limit }) unless limit.nil?
+        opts = opts.merge({ :offset => offset }) unless offset.nil?
         klass.all opts
       end
 
