@@ -51,7 +51,7 @@ orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by
 
 {Luke Cunningham}[http://github.com/icaruswings] contributes the Mongo Mapper adapter.
 
-{Fred Wu}[http://github.com/fredwu] contributes the #destroy methods.
+{Fred Wu}[http://github.com/fredwu] contributes the #destroy methods, and :limit, :offset options for #find_all
 
 {Tim Galeckas}[http://github.com/timgaleckas]
 
