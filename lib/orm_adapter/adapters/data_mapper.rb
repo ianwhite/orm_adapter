@@ -14,12 +14,12 @@ module DataMapper
 
       # @see OrmAdapter::Base#get!
       def get!(id)
-        klass.get!(id)
+        klass.get!(*id)
       end
 
       # @see OrmAdapter::Base#get
       def get(id)
-        klass.get(id)
+        klass.get(*id)
       end
 
       # @see OrmAdapter::Base#find_first
