@@ -65,10 +65,49 @@ module OrmAdapter
     def order_clause(order)
       order.map {|pair| "#{pair[0]} #{pair[1]}"}.join(",")
     end
+
+    class Collection
+
+      attr_reader :collection
+
+      def initialize(collection)
+        @collection = collection
+      end
+
+      def klass
+        collection.klass
+      end
+
+      def klass_adapter
+        @klass_adapter ||= klass.to_adapter
+      end
+
+      def find_first(options = {})
+        conditions, order = klass_adapter.send(:extract_conditions!, options)
+        collection.scoped.where(klass_adapter.send(:conditions_to_fields, conditions)).order(*klass_adapter.send(:order_clause, order)).first
+      end
+
+      def find(options = {})
+        conditions, order, limit, offset = klass_adapter.send(:extract_conditions!, options)
+        collection.scoped.where(klass_adapter.send(:conditions_to_fields, conditions)).order(*klass_adapter.send(:order_clause, order)).limit(limit).offset(offset)
+      end
+
+      def build(attributes = {})
+        collection.build(attributes)
+      end
+
+      def create!(attributes = {})
+        collection.create!(attributes)
+      end
+
+    end
   end
 end
 
 ActiveSupport.on_load(:active_record) do
   extend ::OrmAdapter::ToAdapter
   self::OrmAdapter = ::OrmAdapter::ActiveRecord
+  ActiveRecord::Associations::CollectionAssociation.send :include, ::OrmAdapter::ToCollectionAdapter
+  ActiveRecord::Associations::CollectionAssociation::OrmAdapter = ::OrmAdapter::ActiveRecord::Collection
+  ActiveRecord::Associations::CollectionProxy.delegate :to_adapter, :to => :@association
 end

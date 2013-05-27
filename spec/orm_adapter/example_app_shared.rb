@@ -237,4 +237,57 @@ shared_examples_for "example app with orm_adapter" do
       end
     end
   end
+
+  describe "an ORM collection" do
+    def notes_adapter
+      user.notes.to_adapter
+    end
+    let(:user) { create_model(user_class) }
+    describe "#klass" do
+      it "should return the class of the elements belonging to the collection" do
+        user.notes.to_adapter.klass.should == note_class
+      end
+    end
+    describe "#find_first" do
+      describe "(conditions)" do
+        describe "if note belongs to the user" do
+          it "should return first model matching conditions, if it exists" do
+            create_model(note_class, :description => "stuff")
+            note = create_model(note_class, :owner => user, :description => "stuff")
+            notes_adapter.find_first(:description => "stuff").should == note
+          end
+        end
+
+        describe "if note does not belongs to the user" do
+          it "should not return first model matching conditions, if it exists" do
+            create_model(note_class, :description => "stuff")
+            notes_adapter.find_first(:description => "stuff").should == nil
+          end
+        end
+      end
+    end
+
+    describe "#find" do
+      it "should only return notes belonging to the given user" do
+        note1 = create_model(note_class, :owner => user)
+        note2 = create_model(note_class, :owner => user)
+        note3 = create_model(note_class)
+        note4 = create_model(note_class)
+        notes_adapter.find.should == [note1, note2]
+      end
+    end
+
+    describe "#create!" do
+      it "should create the object with the association to the collection owner established" do
+        note = notes_adapter.create!
+        note.owner.should == user
+      end
+    end
+    describe "#build" do
+      it "should build the object and establish the association to the collection owner" do
+        note = notes_adapter.build
+        note.owner = user
+      end
+    end
+  end
 end

@@ -119,6 +119,21 @@ module OrmAdapter
     end
   end
 
+
+  module Collection
+    class Base
+      attr_reader :collection
+
+      def initialize(collection)
+        @collection = collection
+      end
+
+      def klass
+        raise NotSupportedError
+      end
+    end
+  end
+
   class NotSupportedError < NotImplementedError
     def to_s
       "method not supported by this orm adapter"

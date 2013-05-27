@@ -9,7 +9,7 @@ else
   ActiveRecord::Migration.suppress_messages do
     ActiveRecord::Schema.define(:version => 0) do
       create_table(:users, :force => true) {|t| t.string :name; t.integer :rating; }
-      create_table(:notes, :force => true) {|t| t.belongs_to :owner, :polymorphic => true }
+      create_table(:notes, :force => true) {|t| t.belongs_to :owner, :polymorphic => true ; t.string :description }
     end
   end
   

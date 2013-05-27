@@ -5,4 +5,10 @@ module OrmAdapter
       @_to_adapter ||= self::OrmAdapter.new(self)
     end
   end
+
+  module ToCollectionAdapter
+    def to_adapter
+      @_to_adapter ||= self.class::OrmAdapter.new(self)
+    end
+  end
 end
