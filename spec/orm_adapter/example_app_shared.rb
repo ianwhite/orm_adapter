@@ -62,6 +62,18 @@ shared_examples_for "example app with orm_adapter" do
       it "should raise an error if there is no instance with that id" do
         lambda { user_adapter.get!("nonexistent id") }.should raise_error
       end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should return the instance if it belongs to the scope" do
+          user = create_model(user_class, :name => "balls")
+          user_adapter.get!(user.id).should == user
+        end
+        it "should not return the instance if it does not belong to the scope" do
+          user = create_model(user_class)
+          user_adapter.get!(user.id).should raise_error
+        end
+      end
     end
 
     describe "#get(id)" do
@@ -77,6 +89,18 @@ shared_examples_for "example app with orm_adapter" do
 
       it "should return nil if there is no instance with that id" do
         user_adapter.get("nonexistent id").should be_nil
+      end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should return the instance if it belongs to the scope" do
+          user = create_model(user_class, :name => "balls")
+          user_adapter.get!(user.id).should == user
+        end
+        it "should not return the instance if it does not belong to the scope" do
+          user = create_model(user_class)
+          user_adapter.get!(user.id).should == nil
+        end
       end
     end
 
@@ -124,6 +148,15 @@ shared_examples_for "example app with orm_adapter" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
           user2 = create_model(user_class, :name => "Fred", :rating => 2)
           user_adapter.find_first(:conditions => {:name => "Fred"}, :order => [:rating, :desc]).should == user2
+        end
+      end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should return first model matching conditions belonging to the scope" do
+          user1 = create_model(user_class, :name => "something else")
+          user2 = create_model(user_class, :name => "balls")
+          user_adapter.find_first.should == user2
         end
       end
     end
@@ -194,6 +227,49 @@ shared_examples_for "example app with orm_adapter" do
           user_adapter.find_all(:limit => 1, :offset => 1).should == [user2]
         end
       end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should return all models matching conditions belonging to the scope" do
+          user1 = create_model(user_class, :name => "something else")
+          user2 = create_model(user_class, :name => "something other")
+          user3 = create_model(user_class, :name => "balls")
+          user4 = create_model(user_class, :name => "balls")
+          user_adapter.find_all.should == [user3, user4]
+        end
+      end
+    end
+
+    describe "#build(attributes)" do
+      it "should build a non-persistent model" do
+        user = user_adapter.build
+        user.should_not be_persisted
+      end
+
+      it "should build a model with the passed attributes" do
+        user = user_adapter.build(:name => "Fred")
+        user.name.should == "Fred"
+      end
+
+      it "when attributes contain an associated object, should build a model with the attributes" do
+        user = create_model(user_class)
+        note = note_adapter.build(:owner => user)
+        note.owner.should == user
+      end
+
+      it "when attributes contain an has_many assoc, should build a model with the attributes" do
+        notes = [create_model(note_class), create_model(note_class)]
+        user = user_adapter.build(:notes => notes)
+        user.notes.should == notes
+      end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should pass the adapter conditions as attributes to the built model" do
+          user = user_adapter.build
+          user.name.should == "balls"
+        end
+      end
     end
 
     describe "#create!(attributes)" do
@@ -217,6 +293,14 @@ shared_examples_for "example app with orm_adapter" do
         user = user_adapter.create!(:notes => notes)
         reload_model(user).notes.should == notes
       end
+
+      describe "scoped" do
+        let(:user_adapter) { user_class.to_adapter(:name => "balls") }
+        it "should pass the adapter conditions as attributes to the created model" do
+          user = user_adapter.create!
+          reload_model(user).name.should == "balls"
+        end
+      end
     end
 
     describe "#destroy(instance)" do
@@ -235,8 +319,6 @@ shared_examples_for "example app with orm_adapter" do
         note_adapter.destroy(user).should be_nil
         user_adapter.get(user.id).should == user
       end
-    end
-  end
 
     end
   end
