@@ -1,6 +1,6 @@
 module OrmAdapter
   class Base
-    attr_reader :klass
+    attr_reader :klass, :scope
 
     # Your ORM adapter needs to inherit from this Base class and its adapter
     # will be registered. To create an adapter you should create an inner
@@ -14,8 +14,9 @@ module OrmAdapter
       super
     end
 
-    def initialize(klass)
+    def initialize(klass, scope={})
       @klass = klass
+      @scope = scope
     end
 
     # Get a list of column/property/field names
@@ -65,6 +66,10 @@ module OrmAdapter
     # Find all models, optionally matching conditions, and specifying order
     # @see OrmAdapter::Base#find_first for how to specify order and conditions
     def find_all(options = {})
+      raise NotSupportedError
+    end
+
+    def build(attributes = {})
       raise NotSupportedError
     end
 

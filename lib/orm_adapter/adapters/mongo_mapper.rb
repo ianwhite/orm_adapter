@@ -14,19 +14,19 @@ module MongoMapper
 
       # @see OrmAdapter::Base#get!
       def get!(id)
-        klass.find!(wrap_key(id))
+        scoped.find!(wrap_key(id))
       end
 
       # @see OrmAdapter::Base#get
       def get(id)
-        klass.first({ :id => wrap_key(id) })
+        scoped.first({ :id => wrap_key(id) })
       end
 
       # @see OrmAdapter::Base#find_first
       def find_first(conditions = {})
         conditions, order = extract_conditions!(conditions)
         conditions = conditions.merge(:sort => order) unless order.nil?
-        klass.first(conditions_to_fields(conditions))
+        scoped.first(conditions_to_fields(conditions))
       end
 
       # @see OrmAdapter::Base#find_all
@@ -35,12 +35,17 @@ module MongoMapper
         conditions = conditions.merge(:sort => order) unless order.nil?
         conditions = conditions.merge(:limit => limit) unless limit.nil?
         conditions = conditions.merge(:offset => offset) unless limit.nil? || offset.nil?
-        klass.all(conditions_to_fields(conditions))
+        scoped.all(conditions_to_fields(conditions))
+      end
+
+      # @see OrmAdapter::Base#build
+      def build(attributes = {})
+        klass.new(@scope.merge(attributes))
       end
 
       # @see OrmAdapter::Base#create!
       def create!(attributes = {})
-        klass.create!(attributes)
+        klass.create!(@scope.merge(attributes))
       end
 
       # @see OrmAdapter::Base#destroy
@@ -49,6 +54,10 @@ module MongoMapper
       end
 
     protected
+
+      def scoped
+        klass.where(conditions_to_fields(@scope))
+      end
 
       # converts and documents to ids
       def conditions_to_fields(conditions)
