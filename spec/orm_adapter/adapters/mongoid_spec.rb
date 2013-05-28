@@ -6,7 +6,7 @@ if !defined?(Mongoid) || !(Mongo::Connection.new.db('orm_adapter_spec') rescue n
 else  
   
   Mongoid.configure do |config|
-    config.master = Mongo::Connection.new.db('orm_adapter_spec')
+    config.connect_to( 'orm_adapter_spec' )
   end
   
   module MongoidOrmSpec
@@ -14,13 +14,13 @@ else
       include Mongoid::Document
       field :name
       field :rating
-      has_many_related :notes, :foreign_key => :owner_id, :class_name => 'MongoidOrmSpec::Note'
+      has_many :notes, :foreign_key => :owner_id, :class_name => 'MongoidOrmSpec::Note'
     end
 
     class Note
       include Mongoid::Document
       field :body, :default => "made by orm"
-      belongs_to_related :owner, :class_name => 'MongoidOrmSpec::User'
+      belongs_to :owner, :class_name => 'MongoidOrmSpec::User'
     end
     
     # here be the specs!

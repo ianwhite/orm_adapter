@@ -27,9 +27,7 @@ else
     describe MongoMapper::Document::OrmAdapter do
       
       before do
-        MongoMapper.database.collections.each do | coll |
-          coll.remove
-        end
+        MongoMapper.database.collections.each(&:remove)
       end
     
       it_should_behave_like "example app with orm_adapter" do

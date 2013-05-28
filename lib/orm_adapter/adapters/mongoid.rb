@@ -14,29 +14,34 @@ module Mongoid
 
       # @see OrmAdapter::Base#get!
       def get!(id)
-        klass.find(wrap_key(id))
+        scoped.find(wrap_key(id))
       end
 
       # @see OrmAdapter::Base#get
       def get(id)
-        klass.where(:_id => wrap_key(id)).first
+        scoped.where(:_id => wrap_key(id)).first
       end
 
       # @see OrmAdapter::Base#find_first
       def find_first(options = {})
         conditions, order = extract_conditions!(options)
-        klass.limit(1).where(conditions_to_fields(conditions)).order_by(order).first
+        scoped.limit(1).where(conditions_to_fields(conditions)).order_by(order).first
       end
 
       # @see OrmAdapter::Base#find_all
       def find_all(options = {})
         conditions, order, limit, offset = extract_conditions!(options)
-        klass.where(conditions_to_fields(conditions)).order_by(order).limit(limit).offset(offset)
+        scoped.where(conditions_to_fields(conditions)).order_by(order).limit(limit).offset(offset)
+      end
+
+      # @see OrmAdapter::Base#build
+      def build(attributes = {})
+        scoped.new(attributes)
       end
 
       # @see OrmAdapter::Base#create!
       def create!(attributes = {})
-        klass.create!(attributes)
+        scoped.create!(attributes)
       end
 
       # @see OrmAdapter::Base#destroy
@@ -45,6 +50,10 @@ module Mongoid
       end
 
     protected
+
+      def scoped
+        klass.where(conditions_to_fields(@scope))
+      end
 
       # converts and documents to ids
       def conditions_to_fields(conditions)
