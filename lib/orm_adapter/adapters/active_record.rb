@@ -9,29 +9,33 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#get!
     def get!(id)
-      klass.find(wrap_key(id))
+      scoped.find(wrap_key(id))
     end
 
     # @see OrmAdapter::Base#get
     def get(id)
-      klass.where(klass.primary_key => wrap_key(id)).first
+      scoped.where(klass.primary_key => wrap_key(id)).first
     end
 
     # @see OrmAdapter::Base#find_first
     def find_first(options = {})
       conditions, order = extract_conditions!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
+      scoped.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
     end
 
     # @see OrmAdapter::Base#find_all
     def find_all(options = {})
       conditions, order, limit, offset = extract_conditions!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).offset(offset).all
+      scoped.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).offset(offset).all
+    end
+
+    def build(attributes = {})
+      scoped.build(attributes)
     end
 
     # @see OrmAdapter::Base#create!
     def create!(attributes = {})
-      klass.create!(attributes)
+      scoped.create!(attributes)
     end
 
     # @see OrmAdapter::Base#destroy
@@ -40,6 +44,10 @@ module OrmAdapter
     end
 
   protected
+
+    def scoped
+      klass.where(conditions_to_fields(@scope))
+    end
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields
     def conditions_to_fields(conditions)
