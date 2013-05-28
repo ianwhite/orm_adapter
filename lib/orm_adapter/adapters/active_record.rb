@@ -107,5 +107,4 @@ end
 ActiveSupport.on_load(:active_record) do
   extend ::OrmAdapter::ToAdapter
   self::OrmAdapter = ::OrmAdapter::ActiveRecord
-  ActiveRecord::Associations::CollectionAssociation.send :include, ::OrmAdapter::ToCollectionAdapter
 end
