@@ -13,3 +13,4 @@ doc
 # built gems
 pkg
 *.gem
+.idea
