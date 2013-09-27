@@ -6,7 +6,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
 
   require 'orm_adapter'
 
-  User # is it an ActiveRecord, DM Resource, MongoMapper or MongoId Document?
+  User # is it an ActiveRecord, DM Resource, Riak Ripple, MongoMapper or MongoId Document?
   
   User.to_adapter.find_first :name => 'Fred' # we don't care!
   
@@ -26,7 +26,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   
 == Supported ORMs
 
-Currently supported ORMs are *ActiveRecord*, *DataMapper*, *MongoMapper*, and *MongoId*.
+Currently supported ORMs are *ActiveRecord*, *DataMapper*, *Riak Ripple*, *MongoMapper*, and *MongoId*.
 
 We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these major ORMs working.
 
@@ -48,6 +48,8 @@ If you need complex queries, we recommend you to subclass ORM Adapters in your p
 orm_adapter is an extraction from {pickle}[http://github.com/ianwhite/pickle] by {Ian White}[http://github.com/ianwhite].  Pickle's orm adapter included work by {Daniel Neighman}[http://github.com/hassox], {Josh Bassett}[http://github.com/nullobject], {Marc Lee}[http://github.com/maleko], and {Sebastian Zuchmanski}[http://github.com/sebcioz].
 
 {José Valim}[http://github.com/josevalim] suggested the extraction, and worked on the first release with Ian.
+
+{Daniël W. Crompton}[http://github.com/webhat] contributes the Riak Ripple adapter.
 
 {Luke Cunningham}[http://github.com/icaruswings] contributes the Mongo Mapper adapter.
 
