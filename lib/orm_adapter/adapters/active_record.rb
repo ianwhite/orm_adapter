@@ -23,6 +23,13 @@ module OrmAdapter
       klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
     end
 
+    # @see OrmAdapter::Base#find_collection
+    def find_collection(options = {})
+      conditions, order, limit, offset = extract_conditions!(options)
+      klass.where(conditions_to_fields(conditions)).order(*order_clause(order))
+    end
+
+
     # @see OrmAdapter::Base#find_all
     def find_all(options = {})
       conditions, order, limit, offset = extract_conditions!(options)
