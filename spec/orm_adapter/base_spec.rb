@@ -78,4 +78,10 @@ describe OrmAdapter::Base do
       end
     end
   end
+
+  describe '#find_collection' do
+    it "raises OrmAdapter::NotSupportedError" do
+      lambda { subject.send(:find_collection) }.should raise_error(OrmAdapter::NotSupportedError)
+    end
+  end
 end

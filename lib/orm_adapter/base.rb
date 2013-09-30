@@ -68,6 +68,10 @@ module OrmAdapter
       raise NotSupportedError
     end
 
+    def find_collection(options = {})
+      raise NotSupportedError
+    end
+
     # Create a model using attributes
     def create!(attributes = {})
       raise NotSupportedError
