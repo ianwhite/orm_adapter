@@ -3,7 +3,7 @@ require 'rspec'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 
-['dm-core', 'mongoid', 'active_record', 'mongo_mapper'].each do |orm|
+['dm-core', 'dm-active_model','mongoid', 'active_record', 'mongo_mapper'].each do |orm|
   begin
     require orm
   rescue LoadError
@@ -11,5 +11,4 @@ $:.unshift(File.dirname(__FILE__) + '/../lib')
   end
 end
 
-require 'dm-active_model' if defined?(DataMapper)
 require 'orm_adapter'
