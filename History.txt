@@ -1,3 +1,7 @@
+== 0.4.1
+
+  * Adds activerecord 4 to the test suite
+
 == 0.4.0
 
   * Adds :limit, and :offset options to #find_all [Fred Wu]
