@@ -1,3 +1,8 @@
+== master
+
+  * Only send relation modifiers to ActiveRecord if they apply (don't send #order, #limit, #offset unless specified)
+    Fixes plataformatec/devise#2711, ianwhite/orm_adapter#22
+
 == 0.4.1
 
   * Adds activerecord 4 to the test suite

@@ -19,14 +19,12 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#find_first
     def find_first(options = {})
-      conditions, order = extract_conditions!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).first
+      construct_relation(klass, options).first
     end
 
     # @see OrmAdapter::Base#find_all
     def find_all(options = {})
-      conditions, order, limit, offset = extract_conditions!(options)
-      klass.where(conditions_to_fields(conditions)).order(*order_clause(order)).limit(limit).offset(offset)
+      construct_relation(klass, options)
     end
 
     # @see OrmAdapter::Base#create!
@@ -40,6 +38,16 @@ module OrmAdapter
     end
 
   protected
+    def construct_relation(relation, options)
+      conditions, order, limit, offset = extract_conditions!(options)
+
+      relation = relation.where(conditions_to_fields(conditions))
+      relation = relation.order(order_clause(order)) if order.any?
+      relation = relation.limit(limit) if limit
+      relation = relation.offset(offset) if offset
+
+      relation
+    end
 
     # Introspects the klass to convert and objects in conditions into foreign key and type fields
     def conditions_to_fields(conditions)
