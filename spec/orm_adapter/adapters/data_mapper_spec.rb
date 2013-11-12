@@ -3,10 +3,10 @@ require 'orm_adapter/example_app_shared'
 
 if !defined?(DataMapper)
   puts "** require 'dm-core' to run the specs in #{__FILE__}"
-else  
-  
+else
+
   DataMapper.setup(:default, 'sqlite::memory:')
-  
+
   module DmOrmSpec
     class User
       include DataMapper::Resource
@@ -22,11 +22,11 @@ else
       property :body, String
       belongs_to :owner, 'User'
     end
-    
+
     require  'dm-migrations'
     DataMapper.finalize
     DataMapper.auto_migrate!
-  
+
     # here be the specs!
     describe DataMapper::Resource::OrmAdapter do
       before do
@@ -37,7 +37,7 @@ else
       it_should_behave_like "example app with orm_adapter" do
         let(:user_class) { User }
         let(:note_class) { Note }
-        
+
         def reload_model(model)
           model.class.get(model.id)
         end
