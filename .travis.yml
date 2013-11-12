@@ -1,4 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
-before_install: "cp Gemfile.lock.development Gemfile.lock"
+  - 2.0.1
+gemfile:
+  - Gemfile
+  - gemfiles/activerecord4.gemfile

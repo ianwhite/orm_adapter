@@ -8,10 +8,10 @@
   * Add note about the scope of ORM Adapter re: model instance methods
 
 == 0.2.0
- 
+
   * Normalise :id in find conditions [Tim Galeckas, Ian White]
   * Allow find_first and find_all to take no arguments [Tim Galeckas, Ian White]
-  
+
 == 0.1.0
 
   * Add #destroy(object) to the API [Fred Wu]

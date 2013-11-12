@@ -7,9 +7,9 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   require 'orm_adapter'
 
   User # is it an ActiveRecord, DM Resource, MongoMapper or MongoId Document?
-  
+
   User.to_adapter.find_first :name => 'Fred' # we don't care!
-  
+
   user_model = User.to_adapter
   user_model.get!(1)                      # find a record by id
   user_model.find_first(:name => 'fred')  # find first fred
@@ -18,12 +18,12 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.find_all                     # find all users
   user_model.find_all(:name => 'fred')    # find all freds
   user_model.find_all(:order => :name)    # find all freds, ordered by name
-  user_model.create!(:name => 'fred')     # create a fred 
+  user_model.create!(:name => 'fred')     # create a fred
   user_model.destroy(object)              # destroy the user object
-  
+
 
 @see OrmAdapter::Base for more details of the supported API
-  
+
 == Supported ORMs
 
 Currently supported ORMs are *ActiveRecord*, *DataMapper*, *MongoMapper*, and *MongoId*.
@@ -35,7 +35,7 @@ To write an adapter look at <tt>lib/orm_adapter/adapters/active_record.rb</tt> f
 
 == Goals
 
-ORM Adapter's goal is to support a minimum API used by most of the plugins that needs agnosticism beyond Active Model.  
+ORM Adapter's goal is to support a minimum API used by most of the plugins that needs agnosticism beyond Active Model.
 
 ORM Adapter will support only basic methods, as +get+, +find_first+, <tt>create!</tt> and so forth. It is not ORM Adapter's goal to support different query constructions, handle table joins, etc.
 
@@ -61,11 +61,14 @@ To run the specs, you can start from the last known good set of gem dependencies
 
   git clone http://github.com/ianwhite/orm_adapter
   cd orm_adapter
-  cp Gemfile.lock.development Gemfile.lock
-  bundle
+  bundle install
   bundle exec rake spec
 
+To run specs for different versions of ORMs, you can specify a gemfile from the `gemfiles` directory, e.g.
+
+  BUNDLE_GEMFILE=gemiles/activerecord4.gemfile bundle install
+  BUNDLE_GEMFILE=gemiles/activerecord4.gemfile bundle exec rake spec
 
 == Copyright
 
-Copyright (c) 2010-2012 Ian White and José Valim. See LICENSE for details.
+Copyright (c) 2010-2013 Ian White and José Valim. See LICENSE for details.

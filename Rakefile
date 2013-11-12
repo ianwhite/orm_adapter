@@ -26,12 +26,3 @@ rescue LoadError
 end
 
 Bundler::GemHelper.install_tasks
-
-task :release => :check_gemfile
-
-task :check_gemfile do
-  if File.exists?("Gemfile.lock") && File.read("Gemfile.lock") != File.read("Gemfile.lock.development")
-    cp "Gemfile.lock", "Gemfile.lock.development"
-    raise "** Gemfile.lock.development has been updated, please commit these changes."
-  end
-end
