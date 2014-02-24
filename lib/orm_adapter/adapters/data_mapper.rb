@@ -7,6 +7,11 @@ module DataMapper
 
   module Resource
     class OrmAdapter < ::OrmAdapter::Base
+      # @see OrmAdapter::Base#simple_key
+      def simple_key
+        object.id
+      end
+
       # get a list of column names for a given class
       def column_names
         klass.properties.map(&:name)
