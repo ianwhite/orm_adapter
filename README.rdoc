@@ -66,8 +66,8 @@ To run the specs, you can start from the last known good set of gem dependencies
 
 To run specs for different versions of ORMs, you can specify a gemfile from the `gemfiles` directory, e.g.
 
-  BUNDLE_GEMFILE=gemiles/activerecord4.gemfile bundle install
-  BUNDLE_GEMFILE=gemiles/activerecord4.gemfile bundle exec rake spec
+  BUNDLE_GEMFILE=gemfiles/activerecord-4.1.gemfile bundle install
+  BUNDLE_GEMFILE=gemfiles/activerecord-4.1.gemfile bundle exec rake spec
 
 == Copyright
 

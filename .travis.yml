@@ -23,16 +23,31 @@ matrix:
       services: mongodb
 
     - rvm: 1.9.3
-      gemfile: gemfiles/activerecord-4.gemfile
+      gemfile: gemfiles/activerecord-4.0.gemfile
 
     - rvm: 2.0.0
-      gemfile: gemfiles/activerecord-4.gemfile
+      gemfile: gemfiles/activerecord-4.0.gemfile
 
     - rvm: 2.1.0
-      gemfile: gemfiles/activerecord-4.gemfile
+      gemfile: gemfiles/activerecord-4.0.gemfile
 
     - rvm: jruby-19mode
-      gemfile: gemfiles/activerecord-4.gemfile
+      gemfile: gemfiles/activerecord-4.0.gemfile
 
     - rvm: rbx
-      gemfile: gemfiles/activerecord-4.gemfile
+      gemfile: gemfiles/activerecord-4.0.gemfile
+
+    - rvm: 1.9.3
+      gemfile: gemfiles/activerecord-4.1.gemfile
+
+    - rvm: 2.0.0
+      gemfile: gemfiles/activerecord-4.1.gemfile
+
+    - rvm: 2.1.0
+      gemfile: gemfiles/activerecord-4.1.gemfile
+
+    - rvm: jruby-19mode
+      gemfile: gemfiles/activerecord-4.1.gemfile
+
+    - rvm: rbx
+      gemfile: gemfiles/activerecord-4.1.gemfile

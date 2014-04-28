@@ -1,3 +1,7 @@
+== master
+
+  * Adds active record 4.1 to the test suite
+
 == 0.5.0
 
   * Only send relation modifiers to ActiveRecord if they apply (don't send #order, #limit, #offset unless specified)
