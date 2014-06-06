@@ -1,3 +1,5 @@
+# Copied from orm_adapter and fixed some Specs
+
 # to test your new orm_adapter, make an example app that matches the functionality
 # found in the existing specs for example, look at spec/orm_adapter/adapters/active_record_spec.rb
 #
@@ -134,14 +136,14 @@ shared_examples_for "example app with orm_adapter" do
           user1 = create_model(user_class, :name => "Fred")
           user2 = create_model(user_class, :name => "Fred")
           user3 = create_model(user_class, :name => "Betty")
-          user_adapter.find_all(:name => "Fred").should == [user1, user2]
+          user_adapter.find_all(:name => "Fred").to_a.should =~ [user1, user2]
         end
 
         it "should return all models if no conditions passed" do
           user1 = create_model(user_class, :name => "Fred")
           user2 = create_model(user_class, :name => "Fred")
           user3 = create_model(user_class, :name => "Betty")
-          user_adapter.find_all.should == [user1, user2, user3]
+          user_adapter.find_all.to_a.should =~ [user1, user2, user3]
         end
 
         it "should return empty array if no conditions match" do
@@ -178,9 +180,9 @@ shared_examples_for "example app with orm_adapter" do
         it "should return a limited set of matching models" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
           user2 = create_model(user_class, :name => "Fred", :rating => 2)
-          user3 = create_model(user_class, :name => "Betty", :rating => 1)
-          user_adapter.find_all(:limit => 1).should == [user1]
-          user_adapter.find_all(:limit => 2).should == [user1, user2]
+          user3 = create_model(user_class, :name => "Betty", :rating => 3)
+          user_adapter.find_all(:limit => 1, :order => [:rating, :asc]).should == [user1]
+          user_adapter.find_all(:limit => 2, :order => [:rating, :asc]).should == [user1, user2]
         end
       end
 
@@ -188,10 +190,10 @@ shared_examples_for "example app with orm_adapter" do
         it "should return an offset set of matching models" do
           user1 = create_model(user_class, :name => "Fred", :rating => 1)
           user2 = create_model(user_class, :name => "Fred", :rating => 2)
-          user3 = create_model(user_class, :name => "Betty", :rating => 1)
-          user_adapter.find_all(:limit => 3, :offset => 0).should == [user1, user2, user3]
-          user_adapter.find_all(:limit => 3, :offset => 1).should == [user2, user3]
-          user_adapter.find_all(:limit => 1, :offset => 1).should == [user2]
+          user3 = create_model(user_class, :name => "Betty", :rating => 3)
+          user_adapter.find_all(:limit => 3, :offset => 0, :order => [:rating, :asc]).should == [user1, user2, user3]
+          user_adapter.find_all(:limit => 3, :offset => 1, :order => [:rating, :asc]).should == [user2, user3]
+          user_adapter.find_all(:limit => 1, :offset => 1, :order => [:rating, :asc]).should == [user2]
         end
       end
     end
@@ -222,7 +224,7 @@ shared_examples_for "example app with orm_adapter" do
     describe "#destroy(instance)" do
       it "should destroy the instance if it exists" do
         user = create_model(user_class)
-        user_adapter.destroy(user).should be_true
+        (!!user_adapter.destroy(user)).should == true  # make it work with both RSpec 2.x and 3.x
         user_adapter.get(user.id).should be_nil
       end
 
