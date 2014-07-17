@@ -14,7 +14,7 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#get
     def get(id)
-      klass.where(klass.primary_key => wrap_key(id)).first
+      klass.send("find_by_#{klass.primary_key}", wrap_key(id))
     end
 
     # @see OrmAdapter::Base#find_first
