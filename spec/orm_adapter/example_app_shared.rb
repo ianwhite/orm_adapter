@@ -5,7 +5,7 @@
 #
 # Then you can execute this shared spec as follows:
 #
-#   it_should_behave_like "execute app with orm_adapter" do
+#   it_should_behave_like "example app with orm_adapter" do
 #     let(:user_class) { User }
 #     let(:note_class) { Note }
 #
