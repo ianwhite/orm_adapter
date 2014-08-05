@@ -1,6 +1,9 @@
 language: ruby
 
 matrix:
+  allow_failures:
+    - rvm: rbx
+
   include:
     - rvm: 1.9.3
       gemfile: Gemfile
