@@ -28,7 +28,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
 
 Currently supported ORMs are *ActiveRecord*, *DataMapper*, *MongoMapper*, and *MongoId*.
 
-We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these major ORMs working. Other adapters will be named `orm_adapter-somedatabase`, you can find the ones available {on rubygems a filter}[https://rubygems.org/search?query=orm_adapter-].
+We welcome you to write new adapters as gems. ORM Adapter will stay focused in having these major ORMs working. Other adapters will be named <tt>orm_adapter-somedatabase</tt>, you can find the ones available {on rubygems a filter}[https://rubygems.org/search?query=orm_adapter-].
 
 Here's a list of orm_adapter adapters on rubygems: https://rubygems.org/search?query=orm_adapter-
 
