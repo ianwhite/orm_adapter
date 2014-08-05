@@ -18,6 +18,11 @@ module OrmAdapter
       @klass = klass
     end
 
+    # Return field key that is ready for serialization (needed for Mongoid)
+    def simple_key
+      raise NotSupportedError
+    end
+
     # Get a list of column/property/field names
     def column_names
       raise NotSupportedError

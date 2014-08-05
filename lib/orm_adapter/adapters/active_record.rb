@@ -2,6 +2,11 @@ require 'active_record'
 
 module OrmAdapter
   class ActiveRecord < Base
+    # @see OrmAdapter::Base#simple_key
+    def simple_key
+      object.id
+    end
+
     # Return list of column/property names
     def column_names
       klass.column_names
@@ -37,7 +42,7 @@ module OrmAdapter
       object.destroy && true if valid_object?(object)
     end
 
-  protected
+    protected
     def construct_relation(relation, options)
       conditions, order, limit, offset = extract_conditions!(options)
 

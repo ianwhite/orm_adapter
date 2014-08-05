@@ -7,6 +7,11 @@ module Mongoid
     end
 
     class OrmAdapter < ::OrmAdapter::Base
+      # @see OrmAdapter::Base#simple_key
+      def simple_key
+        object.id.to_s
+      end
+
       # get a list of column names for a given class
       def column_names
         klass.fields.keys
