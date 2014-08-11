@@ -28,6 +28,12 @@ module Mongoid
         klass.limit(1).where(conditions_to_fields(conditions)).order_by(order).first
       end
 
+      # @see OrmAdapter::Base#find_collection
+      def find_collection(options = {})
+        conditions, order = extract_conditions!(options)
+        klass.where(conditions_to_fields(conditions)).order_by(order)
+      end
+
       # @see OrmAdapter::Base#find_all
       def find_all(options = {})
         conditions, order, limit, offset = extract_conditions!(options)
