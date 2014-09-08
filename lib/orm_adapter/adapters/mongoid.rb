@@ -19,11 +19,9 @@ module Mongoid
 
       # @see OrmAdapter::Base#get
       def get(id)
-        begin
-          return klass.find(wrap_key(id))
-        rescue Mongoid::Errors::DocumentNotFound
-          return nil
-        end
+        klass.find(wrap_key(id))
+      rescue Mongoid::Errors::DocumentNotFound
+        nil
       end
 
       # @see OrmAdapter::Base#find_first
