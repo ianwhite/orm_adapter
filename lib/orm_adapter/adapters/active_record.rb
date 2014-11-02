@@ -7,14 +7,9 @@ module OrmAdapter
       klass.column_names
     end
 
-    # @see OrmAdapter::Base#get!
-    def get!(id)
-      klass.find(wrap_key(id))
-    end
-
     # @see OrmAdapter::Base#get
     def get(id)
-      klass.where(klass.primary_key => wrap_key(id)).first
+      klass.find_by_old_id(id)
     end
 
     # @see OrmAdapter::Base#find_first
@@ -22,20 +17,6 @@ module OrmAdapter
       construct_relation(klass, options).first
     end
 
-    # @see OrmAdapter::Base#find_all
-    def find_all(options = {})
-      construct_relation(klass, options)
-    end
-
-    # @see OrmAdapter::Base#create!
-    def create!(attributes = {})
-      klass.create!(attributes)
-    end
-
-    # @see OrmAdapter::Base#destroy
-    def destroy(object)
-      object.destroy && true if valid_object?(object)
-    end
 
   protected
     def construct_relation(relation, options)
