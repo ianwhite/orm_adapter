@@ -9,7 +9,12 @@ module OrmAdapter
 
     # @see OrmAdapter::Base#get
     def get(id)
-      klass.find_by_old_id(id)
+      record = klass.find_by_old_id(id)
+      if record && record.is_a?(Array)
+        return record.first
+      else
+        return record
+      end  
     end
 
     # @see OrmAdapter::Base#find_first
