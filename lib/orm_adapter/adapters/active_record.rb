@@ -7,6 +7,10 @@ module OrmAdapter
       klass.column_names
     end
 
+    def get!(id)
+      klass.find(id)
+    end  
+    
     # @see OrmAdapter::Base#get
     def get(id)
       record = klass.find_by_old_id(id)
