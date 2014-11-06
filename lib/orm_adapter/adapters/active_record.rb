@@ -18,9 +18,9 @@ module OrmAdapter
       new_id =  (id.is_a?(Array) && id.length == 1) ? id[0] : id
 
       if new_id && new_id.is_a?(String) && new_id.length == 24
-        record = klass.find_by_old_id(id)
+        record = klass.find_by_old_id(new_id)
       else
-        record = klass.find_by_num_id(id)
+        record = klass.find_by_num_id(new_id)
       end  
       
       if record && record.is_a?(Array)
