@@ -78,6 +78,16 @@ module OrmAdapter
       raise NotSupportedError
     end
 
+    # Saves an instance by passing in the instance itself.
+    def save(object, options = {})
+      object.save(options)
+    end
+
+    # Saves an instance by passing in the instance itself.
+    def save!(object, options = {})
+      object.save!(options)
+    end
+
     protected
 
     def valid_object?(object)

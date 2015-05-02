@@ -20,6 +20,7 @@ Provides a single point of entry for popular ruby ORMs.  Its target audience is 
   user_model.find_all(:order => :name)    # find all freds, ordered by name
   user_model.create!(:name => 'fred')     # create a fred
   user_model.destroy(object)              # destroy the user object
+  user_model.save(object)                 # saves the user object
 
 
 @see OrmAdapter::Base for more details of the supported API
