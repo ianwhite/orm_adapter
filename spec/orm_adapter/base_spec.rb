@@ -43,8 +43,8 @@ describe OrmAdapter::Base do
 
     describe "#valid_object?" do
       it "determines whether an object is valid for the current model class" do
-        subject.send(:valid_object?, Object.new).should be_true
-        subject.send(:valid_object?, String.new).should be_false
+        subject.send(:valid_object?, Object.new).should be true
+        subject.send(:valid_object?, String.new).should be false
       end
     end
 
