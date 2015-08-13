@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rspec'
+require 'rspec/its'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 
