@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "activerecord", ">= 3.2.15"
   s.add_development_dependency "mongoid", "~> 2.8.0"
   s.add_development_dependency "mongo_mapper", "~> 0.11.0"
-  s.add_development_dependency "rspec", ">= 2.4.0"
   s.add_development_dependency "datamapper", ">= 1.0"
   s.add_development_dependency "dm-sqlite-adapter", ">= 1.0"
   s.add_development_dependency "dm-active_model", ">= 1.0"
