@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/ianwhite/orm_adapter"
   s.license = "MIT"
 
-  s.rubyforge_project = "orm_adapter"
   s.required_rubygems_version = ">= 1.3.6"
 
   s.files         = `git ls-files`.split("\n")
